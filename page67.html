@@ -19,6 +19,14 @@
             flex-direction: column;
             color: #333;
             line-height: 1.6;
+            /* 添加：页面切换淡入效果 */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 添加：页面淡出效果类 */
+        body.fade-out {
+            opacity: 0;
         }
 
         /* Top Navigation - Consistent with previous pages */
@@ -282,7 +290,8 @@
 
     <!-- Top Navigation -->
     <nav class="top-nav">
-        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+        <!-- 修改：href改为page66.html，添加target="_self"和onclick实现平滑过渡 -->
+        <a href="page66.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'page66.html')" target="_self">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -296,7 +305,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <a href="next-article.html" class="nav-btn next" data-i18n="nextBtn">
+        <!-- 修改：href改为page68.html，添加target="_self"和onclick实现平滑过渡 -->
+        <a href="page68.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'page68.html')" target="_self">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -383,6 +393,17 @@
             }
         };
 
+        // 添加：页面平滑导航函数
+        function navigateTo(event, url) {
+            event.preventDefault(); // 阻止默认跳转
+            document.body.classList.add('fade-out'); // 添加淡出类
+            
+            // 延迟 500ms 后跳转，等待淡出动画完成
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
         // Language switching function
         function changeLanguage(lang) {
             document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -423,12 +444,18 @@
             }
         });
 
-        // Keyboard navigation
+        // 修改：键盘导航同样使用平滑过渡
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
-                window.location.href = 'contents.html';
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'page66.html';
+                }, 500);
             } else if (e.key === 'ArrowRight') {
-                window.location.href = 'next-article.html';
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'page68.html';
+                }, 500);
             }
         });
     </script>
