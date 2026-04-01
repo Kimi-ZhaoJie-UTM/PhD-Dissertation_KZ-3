@@ -18,6 +18,14 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            /* 添加：页面切换淡入效果 */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 添加：页面淡出效果类 */
+        body.fade-out {
+            opacity: 0;
         }
 
         /* Language Switcher */
@@ -422,25 +430,25 @@
     </div>
 
     <script>
-        // Translations
+        // Translations - 修改：将"进入目录"改为"进入"
         const translations = {
             en: {
                 location: "Madrid,<br>Spain 2025",
                 conference: "LVIII International Multidisciplinary Conference",
                 title: "Prospects and Key Tendencies of Science in Contemporary World",
-                nextBtn: "Proceed to Contents"
+                nextBtn: "Enter"
             },
             ru: {
                 location: "Мадрид,<br>Испания 2025",
                 conference: "LVIII Международная мультидисциплинарная конференция",
                 title: "Перспективы и ключевые тенденции науки в современном мире",
-                nextBtn: "Перейти к содержанию"
+                nextBtn: "Войти"
             },
             zh: {
                 location: "西班牙马德里<br>2025年",
                 conference: "第五十八届国际多学科会议",
                 title: "当代世界科学的前景与主要趋势",
-                nextBtn: "进入目录"
+                nextBtn: "进入"
             }
         };
 
@@ -475,14 +483,18 @@
             localStorage.setItem('preferred-language', lang);
         }
 
-        // Next page navigation function
+        // Next page navigation function - 修改：添加淡出效果
         function goToNextPage() {
             const btn = document.querySelector('.next-page-btn');
             btn.style.transform = 'scale(0.95)';
             
+            // 添加淡出动画类，实现平滑过渡
+            document.body.classList.add('fade-out');
+            
+            // 延长等待时间，等待淡出动画完成后再跳转
             setTimeout(() => {
                 window.location.href = 'proceedings.html';
-            }, 200);
+            }, 500); // 500ms 与 CSS transition 时间匹配
         }
 
         // Initialize
