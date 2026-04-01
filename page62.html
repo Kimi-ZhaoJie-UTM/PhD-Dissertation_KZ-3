@@ -19,6 +19,14 @@
             flex-direction: column;
             color: #333;
             line-height: 1.6;
+            /* 添加：页面切换淡入效果 */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 添加：页面淡出效果类 */
+        body.fade-out {
+            opacity: 0;
         }
 
         /* Top Navigation - Consistent Design */
@@ -316,7 +324,8 @@
 
     <!-- Top Navigation -->
     <nav class="top-nav">
-        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+        <!-- 修改：添加 target="_self" 和 onclick 事件实现平滑过渡 -->
+        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'contents.html')" target="_self">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -330,7 +339,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <a href="page64.html" class="nav-btn next" data-i18n="nextBtn">
+        <!-- 修改：href改为page63.html，添加 target="_self" 和 onclick 事件实现平滑过渡 -->
+        <a href="page63.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'page63.html')" target="_self">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -435,7 +445,7 @@
                 nextBtn: "下一页",
                 titleEn: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
                 titleRu: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
-                authorName: "赵洁",
+                authorName: "赵杰",
                 authorAffil: "工商管理博士（DBA），<br>哈萨克斯坦国立阿尔法拉比大学，<br>哈萨克斯坦，阿拉木图",
                 abstractLabel: "摘要",
                 abstractText: "本研究考察了哈萨克斯坦金融创新与可持续经济增长之间的相互作用，重点关注其转型经济中的机遇与挑战。分析强调了数字金融、绿色融资机制以及阿斯塔纳国际金融中心（AIFC）等倡议推动的监管进步如何促进经济多元化和包容性。虽然金融创新通过可再生能源投资增强了中小企业和农村人口的融资渠道，并与全球可持续发展目标保持一致，但监管碎片化、网络安全风险和基础设施赤字等挑战依然存在。研究强调需要采取平衡政策，在确保稳定的同时促进技术进步，为政策制定者提供见解，旨在将金融现代化与长期生态和社会目标相协调。哈萨克斯坦的经验为经历类似转型的新兴经济体提供了宝贵模式。",
@@ -447,6 +457,17 @@
                 continued: "[下页待续]"
             }
         };
+
+        // 添加：页面平滑导航函数
+        function navigateTo(event, url) {
+            event.preventDefault(); // 阻止默认跳转
+            document.body.classList.add('fade-out'); // 添加淡出类
+            
+            // 延迟 500ms 后跳转，等待淡出动画完成
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
 
         // Language switching function
         function changeLanguage(lang) {
@@ -488,12 +509,18 @@
             }
         });
 
-        // Keyboard navigation
+        // 修改：键盘导航同样使用平滑过渡
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
-                window.location.href = 'contents.html';
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'contents.html';
+                }, 500);
             } else if (e.key === 'ArrowRight') {
-                window.location.href = 'page64.html';
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'page63.html';
+                }, 500);
             }
         });
     </script>
