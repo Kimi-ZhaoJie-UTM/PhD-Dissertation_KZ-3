@@ -293,14 +293,13 @@
         }
     </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 
     <!-- Top Navigation -->
     <nav class="top-nav">
-        <!-- 修改：添加 onclick 事件阻止默认跳转，改为平滑过渡 -->
-        <a href="index.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'index.html')">
+        <!-- 修复：添加 target="_self" 覆盖 base 标签的新窗口设置，确保在当前窗口平滑过渡 -->
+        <a href="index.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'index.html')" target="_self">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -314,8 +313,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <!-- 修改：添加 onclick 事件阻止默认跳转，改为平滑过渡 -->
-        <a href="publicationinfo.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'publicationinfo.html')">
+        <!-- 修复：添加 target="_self" 覆盖 base 标签的新窗口设置 -->
+        <a href="publicationinfo.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'publicationinfo.html')" target="_self">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -389,7 +388,7 @@
             }
         };
 
-        // 添加：页面平滑导航函数
+        // 页面平滑导航函数
         function navigateTo(event, url) {
             event.preventDefault(); // 阻止默认跳转
             document.body.classList.add('fade-out'); // 添加淡出类
@@ -453,7 +452,7 @@
             }
         });
 
-        // 修改：键盘导航同样使用平滑过渡
+        // 键盘导航同样使用平滑过渡
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
                 document.body.classList.add('fade-out');
