@@ -19,6 +19,14 @@
             flex-direction: column;
             color: #222;
             line-height: 1.6;
+            /* 添加：页面切换淡入效果 */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 添加：页面淡出效果类 */
+        body.fade-out {
+            opacity: 0;
         }
 
         /* Top Navigation - Consistent Design */
@@ -62,11 +70,13 @@
             box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
         }
 
+        /* 移除：disabled 样式，因为下一页现在可用了 
         .nav-btn.disabled {
             opacity: 0.5;
             cursor: not-allowed;
             pointer-events: none;
         }
+        */
 
         .nav-btn svg {
             width: 18px;
@@ -278,7 +288,8 @@
 
     <!-- Top Navigation -->
     <nav class="top-nav">
-        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+        <!-- 修改：href改为page67.html，添加onclick实现平滑过渡 -->
+        <a href="page67.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'page67.html')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -292,7 +303,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <a href="#" class="nav-btn next disabled" onclick="alert('End of proceedings')" data-i18n="nextBtn">
+        <!-- 修改：href改为page69.html，移除disabled类，添加onclick实现平滑过渡 -->
+        <a href="page69.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'page69.html')">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -381,6 +393,17 @@
             }
         };
 
+        // 添加：页面平滑导航函数
+        function navigateTo(event, url) {
+            event.preventDefault(); // 阻止默认跳转
+            document.body.classList.add('fade-out'); // 添加淡出类
+            
+            // 延迟 500ms 后跳转，等待淡出动画完成
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
         // Language switching function
         function changeLanguage(lang) {
             document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -419,10 +442,18 @@
             }
         });
 
-        // Keyboard navigation
+        // 修改：键盘导航同样使用平滑过渡
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
-                window.location.href = 'contents.html';
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'page67.html';
+                }, 500);
+            } else if (e.key === 'ArrowRight') {
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'page69.html';
+                }, 500);
             }
         });
     </script>
