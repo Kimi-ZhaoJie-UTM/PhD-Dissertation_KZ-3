@@ -370,6 +370,7 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -406,7 +407,7 @@
 
             <!-- 修复：移除初始 pulse 类，让 fadeInUp 先执行 -->
             <button class="next-page-btn" onclick="goToNextPage()" data-i18n="nextBtn">
-                <span class="btn-text">Proceed to Contents</span>
+                <span class="btn-text">Enter</span>
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -500,9 +501,8 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
-            if (savedLang !== 'en') {
-                changeLanguage(savedLang);
-            }
+            // 始终应用语言设置，确保初始文本一致
+            changeLanguage(savedLang);
 
             // Add transition styles dynamically
             document.querySelectorAll('[data-i18n]').forEach(el => {
