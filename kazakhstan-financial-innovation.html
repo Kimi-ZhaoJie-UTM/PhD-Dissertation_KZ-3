@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Innovation in Kazakhstan - Internauka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #000;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Top Navigation - Consistent Style */
+        .top-nav {
+            width: 100%;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 5px 12px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Academic Content */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 60px 80px;
+            flex: 1;
+        }
+
+        /* Section Header (Section 7 marker) */
+        .section-marker {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #333;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Paper Title */
+        .paper-title {
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            color: #000;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .paper-title-ru {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            color: #000;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        /* Author Information */
+        .author-section {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+        }
+
+        .author-name {
+            font-size: 16px;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .author-affiliation {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .author-name-ru {
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .author-affiliation-ru {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            font-style: normal;
+        }
+
+        /* Abstract Section */
+        .abstract-section {
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        .abstract-title {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .abstract-content {
+            font-size: 15px;
+            text-align: justify;
+            text-indent: 30px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #000;
+        }
+
+        .abstract-content-ru {
+            font-size: 15px;
+            text-align: justify;
+            text-indent: 30px;
+            line-height: 1.8;
+            color: #000;
+            margin-top: 20px;
+        }
+
+        /* Keywords */
+        .keywords {
+            margin: 30px 0;
+            font-size: 15px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+
+        .keywords-label {
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        /* Introduction Section */
+        .introduction {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
+        .section-heading {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .body-text {
+            font-size: 15px;
+            text-align: justify;
+            text-indent: 30px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #000;
+        }
+
+        /* Divider Line */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 12px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .article-container {
+                padding: 30px 25px 60px;
+            }
+
+            .paper-title {
+                font-size: 20px;
+            }
+
+            .paper-title-ru {
+                font-size: 18px;
+            }
+
+            .abstract-content,
+            .abstract-content-ru,
+            .body-text {
+                text-indent: 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+            .article-container {
+                page-break-after: always;
+            }
+        }
+
+        /* Smooth transitions for language switch */
+        .paper-title,
+        .paper-title-ru,
+        .author-section,
+        .abstract-section,
+        .keywords,
+        .introduction {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="next-article.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Article Content -->
+    <article class="article-container">
+        <!-- Section Marker -->
+        <div class="section-marker" data-i18n="sectionMarker">Section 7. Economics</div>
+
+        <!-- Paper Title English -->
+        <h1 class="paper-title" data-i18n="paperTitle">
+            Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges
+        </h1>
+
+        <!-- Paper Title Russian -->
+        <h2 class="paper-title-ru" data-i18n="paperTitleRu" style="display: block;">
+            Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы
+        </h2>
+
+        <!-- Author Information -->
+        <div class="author-section">
+            <div class="author-info-en" data-i18n="authorInfo">
+                <div class="author-name">Zhao Jie</div>
+                <div class="author-affiliation">
+                    Doctor of Business Administration (DBA),<br>
+                    Al-Farabi Kazakh National University,<br>
+                    Kazakhstan, Almaty
+                </div>
+            </div>
+            
+            <div class="author-info-ru" data-i18n="authorInfoRu" style="display: block; margin-top: 25px;">
+                <div class="author-name-ru">Чжао Цзе</div>
+                <div class="author-affiliation-ru">
+                    доктор делового администрирования,<br>
+                    Казахский национальный университет им. Аль-Фараби,<br>
+                    Казахстан, г. Алматы
+                </div>
+            </div>
+        </div>
+
+        <!-- Abstract Section -->
+        <div class="abstract-section">
+            <div class="abstract-title" data-i18n="abstractTitle">Abstract</div>
+            <p class="abstract-content" data-i18n="abstractText">
+                This study examines the interplay between financial innovation and sustainable economic growth in Kazakhstan, focusing on opportunities and challenges within its transitional economy. The analysis highlights how digital finance, green financing mechanisms, and regulatory advancements through initiatives like the Astana International Financial Centre (AIFC) contribute to economic diversification and inclusivity. While financial innovation enhances access for SMEs and rural populations and aligns with global sustainability goals through renewable energy investments, challenges such as regulatory fragmentation, cybersecurity risks, and infrastructure deficits persist. The study underscores the need for balanced policies that foster technological progress while ensuring stability, offering insights for policymakers aiming to harmonize financial modernization with long-term ecological and social objectives. Kazakhstan's experience provides a valuable model for emerging economies navigating similar transformations.
+            </p>
+
+            <div class="abstract-title" data-i18n="abstractTitleRu" style="margin-top: 25px;">Аннотация</div>
+            <p class="abstract-content-ru" data-i18n="abstractTextRu">
+                В данном исследовании рассматривается взаимодействие финансовых инноваций и устойчивого экономического роста в Казахстане, с акцентом на возможности и проблемы переходной экономики. Анализ показывает, как цифровые финансы, механизмы «зеленого» финансирования и усовершенствования в сфере регулирования, реализуемые в рамках таких инициатив, как Международный финансовый центр «Астана» (МФЦА), способствуют экономической диверсификации и инклюзивности. Хотя финансовые инновации расширяют доступ для субъектов малого и среднего предпринимательства и сельского населения и согласуются с глобальными целями устойчивого развития благодаря инвестициям в возобновляемые источники энергии, сохраняются такие проблемы, как фрагментация регулирования, риски кибербезопасности и дефицит инфраструктуры. В исследовании подчеркивается необходимость сбалансированной политики, способствующей технологическому прогрессу и обеспечивающей стабильность, и предлагаются идеи для политиков, стремящихся гармонизировать финансовую модернизацию с долгосрочными экологическими и социальными целями. Опыт Казахстана служит ценной моделью для стран с развивающейся экономикой, осуществляющих аналогичные преобразования.
+            </p>
+        </div>
+
+        <!-- Keywords -->
+        <div class="keywords" data-i18n="keywords">
+            <span class="keywords-label">Keywords:</span> financial innovation, sustainable economic growth, Kazakhstan, digital finance, green bonds, regulatory frameworks.
+        </div>
+        
+        <div class="keywords" data-i18n="keywordsRu" style="margin-top: 15px;">
+            <span class="keywords-label">Ключевые слова:</span> финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, «зеленые» облигации, нормативно-правовая база.
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Introduction -->
+        <section class="introduction">
+            <h3 class="section-heading" data-i18n="introHeading">Introduction</h3>
+            <p class="body-text" data-i18n="introText1">
+                Financial innovation has emerged as a critical driver of economic transformation, particularly in emerging economies where structural reforms and technological adoption are essential for sustaining long-term growth. Kazakhstan, as a rapidly developing nation in Central Asia, faces the dual challenge of modernizing its financial sector while ensuring that economic expansion aligns with broader sustainability objectives. The country's strategic vision, outlined in initiatives such as the Kazakhstan 2050 Strategy and Digital Kazakhstan, underscores the importance of integrating innovative financial mechanisms to enhance competitiveness and resilience.
+            </p>
+            <p class="body-text" data-i18n="introText2" style="margin-top: 15px;">
+                However, despite progress in digital banking, fintech adoption, and regulatory experimentation through the Astana International Financial Centre (AIFC), systemic barriers persist, including uneven financial inclusion, reliance on resource-driven growth models, and gaps in regulatory coherence.
+            </p>
+        </section>
+    </article>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                sectionMarker: "Section 7. Economics",
+                paperTitle: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
+                paperTitleRu: "", // Hidden in EN mode or show both
+                authorInfo: "display: block;",
+                authorInfoRu: "display: none;",
+                abstractTitle: "Abstract",
+                abstractText: "This study examines the interplay between financial innovation and sustainable economic growth in Kazakhstan, focusing on opportunities and challenges within its transitional economy. The analysis highlights how digital finance, green financing mechanisms, and regulatory advancements through initiatives like the Astana International Financial Centre (AIFC) contribute to economic diversification and inclusivity. While financial innovation enhances access for SMEs and rural populations and aligns with global sustainability goals through renewable energy investments, challenges such as regulatory fragmentation, cybersecurity risks, and infrastructure deficits persist. The study underscores the need for balanced policies that foster technological progress while ensuring stability, offering insights for policymakers aiming to harmonize financial modernization with long-term ecological and social objectives. Kazakhstan's experience provides a valuable model for emerging economies navigating similar transformations.",
+                abstractTitleRu: "Аннотация",
+                abstractTextRu: "В данном исследовании рассматривается взаимодействие финансовых инноваций и устойчивого экономического роста в Казахстане, с акцентом на возможности и проблемы переходной экономики. Анализ показывает, как цифровые финансы, механизмы «зеленого» финансирования и усовершенствования в сфере регулирования, реализуемые в рамках таких инициатив, как Международный финансовый центр «Астана» (МФЦА), способствуют экономической диверсификации и инклюзивности. Хотя финансовые инновации расширяют доступ для субъектов малого и среднего предпринимательства и сельского населения и согласуются с глобальными целями устойчивого развития благодаря инвестициям в возобновляемые источники энергии, сохраняются такие проблемы, как фрагментация регулирования, риски кибербезопасности и дефицит инфраструктуры. В исследовании подчеркивается необходимость сбалансированной политики, способствующей технологическому прогрессу и обеспечивающей стабильность, и предлагаются идеи для политиков, стремящихся гармонизировать финансовую модернизацию с долгосрочными экологическими и социальными целями. Опыт Казахстана служит ценной моделью для стран с развивающейся экономикой, осуществляющих аналогичные преобразования.",
+                keywords: "<span class='keywords-label'>Keywords:</span> financial innovation, sustainable economic growth, Kazakhstan, digital finance, green bonds, regulatory frameworks.",
+                keywordsRu: "<span class='keywords-label'>Ключевые слова:</span> финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, «зеленые» облигации, нормативно-правовая база.",
+                introHeading: "Introduction",
+                introText1: "Financial innovation has emerged as a critical driver of economic transformation, particularly in emerging economies where structural reforms and technological adoption are essential for sustaining long-term growth. Kazakhstan, as a rapidly developing nation in Central Asia, faces the dual challenge of modernizing its financial sector while ensuring that economic expansion aligns with broader sustainability objectives. The country's strategic vision, outlined in initiatives such as the Kazakhstan 2050 Strategy and Digital Kazakhstan, underscores the importance of integrating innovative financial mechanisms to enhance competitiveness and resilience.",
+                introText2: "However, despite progress in digital banking, fintech adoption, and regulatory experimentation through the Astana International Financial Centre (AIFC), systemic barriers persist, including uneven financial inclusion, reliance on resource-driven growth models, and gaps in regulatory coherence."
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                sectionMarker: "Раздел 7. Экономика",
+                paperTitle: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                paperTitleRu: "", // Show only RU title
+                authorInfo: "display: none;",
+                authorInfoRu: "display: block;",
+                abstractTitle: "Аннотация",
+                abstractText: "В данном исследовании рассматривается взаимодействие финансовых инноваций и устойчивого экономического роста в Казахстане, с акцентом на возможности и проблемы переходной экономики. Анализ показывает, как цифровые финансы, механизмы «зеленого» финансирования и усовершенствования в сфере регулирования, реализуемые в рамках таких инициатив, как Международный финансовый центр «Астана» (МФЦА), способствуют экономической диверсификации и инклюзивности. Хотя финансовые инновации расширяют доступ для субъектов малого и среднего предпринимательства и сельского населения и согласуются с глобальными целями устойчивого развития благодаря инвестициям в возобновляемые источники энергии, сохраняются такие проблемы, как фрагментация регулирования, риски кибербезопасности и дефицит инфраструктуры. В исследовании подчеркивается необходимость сбалансированной политики, способствующей технологическому прогрессу и обеспечивающей стабильность, и предлагаются идеи для политиков, стремящихся гармонизировать финансовую модернизацию с долгосрочными экологическими и социальными целями. Опыт Казахстана служит ценной моделью для стран с развивающейся экономикой, осуществляющих аналогичные преобразования.",
+                abstractTitleRu: "Abstract",
+                abstractTextRu: "This study examines the interplay between financial innovation and sustainable economic growth in Kazakhstan...",
+                keywords: "<span class='keywords-label'>Ключевые слова:</span> финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, «зеленые» облигации, нормативно-правовая база.",
+                keywordsRu: "<span class='keywords-label'>Keywords:</span> financial innovation, sustainable economic growth, Kazakhstan, digital finance, green bonds, regulatory frameworks.",
+                introHeading: "Введение",
+                introText1: "Финансовые инновации стали критически важным драйвером экономической трансформации, особенно в развивающихся экономиках, где структурные реформы и внедрение технологий необходимы для поддержания долгосрочного роста. Казахстан, как быстро развивающееся государство Центральной Азии, сталкивается с двойным вызовом: модернизация финансового сектора при одновременном обеспечении соответствия экономического расширения более широким целям устойчивого развития. Стратегическое видение страны, изложенное в таких инициативах, как Стратегия Казахстан 2050 и Цифровой Казахстан, подчеркивает важность интеграции инновационных финансовых механизмов для повышения конкурентоспособности и устойчивости.",
+                introText2: "Однако, несмотря на прогресс в области цифрового банкинга, внедрения финтех-решений и регуляторных экспериментов через Международный финансовый центр «Астана» (МФЦА), сохраняются системные барьеры, включая неравномерную финансовую инклюзию, зависимость от ресурсно-ориентированных моделей роста и пробелы в регуляторной согласованности."
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                sectionMarker: "第7节 经济学",
+                paperTitle: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
+                paperTitleRu: "",
+                authorInfo: "display: block;",
+                authorInfoRu: "display: none;",
+                abstractTitle: "摘要",
+                abstractText: "本研究探讨了哈萨克斯坦金融创新与可持续经济增长之间的相互作用，重点关注其转型经济中的机遇与挑战。分析强调了数字金融、绿色融资机制以及通过阿斯塔纳国际金融中心（AIFC）等举措实现的监管进步如何促进经济多元化和包容性。虽然金融创新通过可再生能源投资增强了中小企业和农村人口的融资渠道，并与全球可持续发展目标保持一致，但监管碎片化、网络安全风险和基础设施赤字等挑战依然存在。研究强调了制定平衡政策的必要性，即在确保稳定的同时促进技术进步，为旨在将金融现代化与长期生态和社会目标相协调的政策制定者提供见解。哈萨克斯坦的经验为经历类似转型的新兴经济体提供了宝贵模式。",
+                abstractTitleRu: "Аннотация",
+                abstractTextRu: "В данном исследовании рассматривается взаимодействие финансовых инноваций...",
+                keywords: "<span class='keywords-label'>关键词：</span>金融创新、可持续经济增长、哈萨克斯坦、数字金融、绿色债券、监管框架。",
+                keywordsRu: "<span class='keywords-label'>Ключевые слова:</span> финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, «зеленые» облигации, нормативно-правовая база.",
+                introHeading: "引言",
+                introText1: "金融创新已成为经济转型的关键驱动力，特别是在结构性改革和技术应用对于维持长期增长至关重要的新兴经济体中。作为中亚快速发展的国家，哈萨克斯坦面临着双重挑战：既要实现金融部门的现代化，又要确保经济扩张与更广泛的可持续发展目标保持一致。该国在《哈萨克斯坦2050战略》和《数字哈萨克斯坦》等倡议中阐述的战略愿景，强调了整合创新金融机制以提高竞争力和韧性的重要性。",
+                introText2: "然而，尽管在数字银行、金融科技应用以及通过阿斯塔纳国际金融中心（AIFC）进行的监管实验方面取得了进展，但系统性障碍依然存在，包括金融包容性不均衡、对资源驱动型增长模式的依赖以及监管协调方面的差距。"
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const t = translations[lang];
+            
+            // Update navigation
+            document.querySelector('[data-i18n="prevBtn"] span').textContent = t.prevBtn;
+            document.querySelector('[data-i18n="nextBtn"] span').textContent = t.nextBtn;
+            
+            // Update content with animation
+            const elements = document.querySelectorAll('.article-container [data-i18n]');
+            elements.forEach((el, index) => {
+                const key = el.getAttribute('data-i18n');
+                if (!t[key]) return;
+                
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    if (key.includes('authorInfo')) {
+                        el.style.display = t[key];
+                    } else if (key.includes('keywords')) {
+                        el.innerHTML = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 200 + (index * 50));
+            });
+
+            // Handle bilingual display
+            const paperTitleRu = document.querySelector('[data-i18n="paperTitleRu"]');
+            const abstractTitleRu = document.querySelector('[data-i18n="abstractTitleRu"]');
+            const abstractTextRu = document.querySelector('[data-i18n="abstractTextRu"]');
+            const keywordsRu = document.querySelector('[data-i18n="keywordsRu"]');
+            
+            if (lang === 'en') {
+                paperTitleRu.style.display = 'block';
+                abstractTitleRu.style.display = 'block';
+                abstractTextRu.style.display = 'block';
+                keywordsRu.style.display = 'block';
+            } else if (lang === 'zh') {
+                paperTitleRu.style.display = 'none'; // Hide Russian in Chinese mode
+                abstractTitleRu.style.display = 'none';
+                abstractTextRu.style.display = 'none';
+                keywordsRu.style.display = 'none';
+            } else if (lang === 'ru') {
+                paperTitleRu.style.display = 'none'; // Show only Russian main title
+                abstractTitleRu.style.display = 'block';
+                abstractTextRu.style.display = 'block';
+                keywordsRu.style.display = 'block';
+            }
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'contents.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'next-article.html';
+            }
+        });
+    </script>
+</body>
+</html>
