@@ -304,7 +304,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <a href="contents.html" class="nav-btn next" data-i18n="nextBtn">
+        <!-- 修复：改为 publicationinfo.html -->
+        <a href="publicationinfo.html" class="nav-btn next" data-i18n="nextBtn">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -436,7 +437,8 @@
             if (e.key === 'ArrowLeft') {
                 window.location.href = 'index.html';
             } else if (e.key === 'ArrowRight') {
-                window.location.href = 'contents.html';
+                // 修复：改为 publicationinfo.html
+                window.location.href = 'publicationinfo.html';
             }
         });
     </script>
