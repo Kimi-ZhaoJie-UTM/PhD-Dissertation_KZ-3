@@ -19,17 +19,14 @@
             flex-direction: column;
             color: #333;
             line-height: 1.6;
-            /* 添加：页面切换淡入效果 */
             opacity: 1;
             transition: opacity 0.5s ease;
         }
 
-        /* 添加：页面淡出效果类 */
         body.fade-out {
             opacity: 0;
         }
 
-        /* Top Navigation - Consistent Design */
         .top-nav {
             width: 100%;
             padding: 20px 40px;
@@ -116,7 +113,6 @@
             border-color: #c2185b;
         }
 
-        /* Main Article Container */
         .article-container {
             flex: 1;
             max-width: 800px;
@@ -125,7 +121,6 @@
             width: 100%;
         }
 
-        /* Article Header */
         .article-header {
             text-align: center;
             margin-bottom: 50px;
@@ -152,7 +147,6 @@
             font-style: italic;
         }
 
-        /* Author Info */
         .author-section {
             text-align: center;
             margin-bottom: 40px;
@@ -176,7 +170,6 @@
             margin: 0 auto;
         }
 
-        /* Abstract Section */
         .abstract-section {
             margin-bottom: 40px;
             opacity: 0;
@@ -204,7 +197,6 @@
             border-radius: 0 8px 8px 0;
         }
 
-        /* Keywords */
         .keywords-section {
             margin-bottom: 50px;
             opacity: 0;
@@ -223,7 +215,6 @@
             font-style: italic;
         }
 
-        /* Introduction Section */
         .introduction-section {
             opacity: 0;
             animation: fadeInUp 1s ease 1.2s forwards;
@@ -250,7 +241,6 @@
             margin-bottom: 0;
         }
 
-        /* Truncated indicator */
         .truncated-indicator {
             text-align: center;
             margin-top: 40px;
@@ -269,7 +259,6 @@
             opacity: 0.3;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             to { opacity: 1; }
         }
@@ -285,7 +274,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .top-nav {
                 padding: 15px 20px;
@@ -319,12 +307,11 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
-    <!-- Top Navigation -->
     <nav class="top-nav">
-        <!-- 修改：添加 target="_self" 和 onclick 事件实现平滑过渡 -->
         <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn" onclick="navigateTo(event, 'contents.html')" target="_self">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -339,7 +326,6 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <!-- 修改：href改为page63.html，添加 target="_self" 和 onclick 事件实现平滑过渡 -->
         <a href="page63.html" class="nav-btn next" data-i18n="nextBtn" onclick="navigateTo(event, 'page63.html')" target="_self">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -349,19 +335,16 @@
         </a>
     </nav>
 
-    <!-- Article Content -->
     <article class="article-container">
-        <!-- Header with Titles -->
         <header class="article-header">
             <h1 class="article-title-en" data-i18n="titleEn">
-                Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges
+                FINANCIAL INNOVATION AND SUSTAINABLE ECONOMIC GROWTH IN KAZAKHSTAN: OPPORTUNITIES AND CHALLENGES
             </h1>
             <h2 class="article-title-ru" data-i18n="titleRu">
-                Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы
+                ФИНАНСОВЫЕ ИННОВАЦИИ И УСТОЙЧИВЫЙ ЭКОНОМИЧЕСКИЙ РОСТ В КАЗАХСТАНЕ: ВОЗМОЖНОСТИ И ПРОБЛЕМЫ
             </h2>
         </header>
 
-        <!-- Author Information -->
         <div class="author-section">
             <div class="author-name" data-i18n="authorName">Zhao Jie</div>
             <div class="author-affiliation" data-i18n="authorAffil">
@@ -371,7 +354,6 @@
             </div>
         </div>
 
-        <!-- Abstract -->
         <section class="abstract-section">
             <div class="section-label" data-i18n="abstractLabel">Abstract</div>
             <div class="abstract-content" data-i18n="abstractText">
@@ -379,7 +361,6 @@
             </div>
         </section>
 
-        <!-- Keywords -->
         <section class="keywords-section">
             <span class="keywords-label" data-i18n="keywordsLabel">Keywords:</span>
             <span class="keywords-content" data-i18n="keywords">
@@ -387,7 +368,6 @@
             </span>
         </section>
 
-        <!-- Introduction -->
         <section class="introduction-section">
             <h3 class="intro-title" data-i18n="introLabel">Introduction</h3>
             <p class="intro-text" data-i18n="introP1">
@@ -398,7 +378,6 @@
             </p>
         </section>
 
-        <!-- Continuation Indicator -->
         <div class="truncated-indicator">
             <div class="truncated-line"></div>
             <span data-i18n="continued">[Continued on next page]</span>
@@ -406,13 +385,12 @@
     </article>
 
     <script>
-        // Translations
         const translations = {
             en: {
                 prevBtn: "Previous Page",
                 nextBtn: "Next Page",
-                titleEn: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
-                titleRu: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                titleEn: "FINANCIAL INNOVATION AND SUSTAINABLE ECONOMIC GROWTH IN KAZAKHSTAN: OPPORTUNITIES AND CHALLENGES",
+                titleRu: "ФИНАНСОВЫЕ ИННОВАЦИИ И УСТОЙЧИВЫЙ ЭКОНОМИЧЕСКИЙ РОСТ В КАЗАХСТАНЕ: ВОЗМОЖНОСТИ И ПРОБЛЕМЫ",
                 authorName: "Zhao Jie",
                 authorAffil: "Doctor of Business Administration (DBA),<br>Al-Farabi Kazakh National University,<br>Kazakhstan, Almaty",
                 abstractLabel: "Abstract",
@@ -427,24 +405,24 @@
             ru: {
                 prevBtn: "Предыдущая страница",
                 nextBtn: "Следующая страница",
-                titleEn: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
-                titleRu: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                titleEn: "FINANCIAL INNOVATION AND SUSTAINABLE ECONOMIC GROWTH IN KAZAKHSTAN: OPPORTUNITIES AND CHALLENGES",
+                titleRu: "ФИНАНСОВЫЕ ИННОВАЦИИ И УСТОЙЧИВЫЙ ЭКОНОМИЧЕСКИЙ РОСТ В КАЗАХСТАНЕ: ВОЗМОЖНОСТИ И ПРОБЛЕМЫ",
                 authorName: "Чжао Цзе",
-                authorAffil: "Доктор делового администрирования (DBA),<br>Казахский национальный университет им. Аль-Фараби,<br>Казахстан, г. Алматы",
+                authorAffil: "доктор делового администрирования,<br>Казахский национальный университет им. Аль-Фараби,<br>Казахстан, г. Алматы",
                 abstractLabel: "Аннотация",
                 abstractText: "В данном исследовании рассматривается взаимодействие финансовых инноваций и устойчивого экономического роста в Казахстане, с акцентом на возможности и проблемы переходной экономики. Анализ показывает, как цифровые финансы, механизмы «зеленого» финансирования и усовершенствования в сфере регулирования, реализуемые в рамках таких инициатив, как Международный финансовый центр «Астана» (МФЦА), способствуют экономической диверсификации и инклюзивности. Хотя финансовые инновации расширяют доступ для субъектов малого и среднего предпринимательства и сельского населения и согласуются с глобальными целями устойчивого развития благодаря инвестициям в возобновляемые источники энергии, сохраняются такие проблемы, как фрагментация регулирования, риски кибербезопасности и дефицит инфраструктуры. В исследовании подчеркивается необходимость сбалансированной политики, способствующей технологическому прогрессу и обеспечивающей стабильность, и предлагаются идеи для политиков, стремящихся гармонизировать финансовую модернизацию с долгосрочными экологическими и социальными целями. Опыт Казахстана служит ценной моделью для стран с развивающейся экономикой, осуществляющих аналогичные преобразования.",
                 keywordsLabel: "Ключевые слова:",
                 keywords: "финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, «зеленые» облигации, нормативно-правовая база.",
                 introLabel: "Введение",
-                introP1: "Финансовые инновации стали важнейшим драйвером экономической трансформации, особенно в развивающихся экономиках, где структурные реформы и внедрение технологий необходимы для поддержания долгосрочного роста. Казахстан, как быстро развивающееся государство Центральной Азии, сталкивается с двойной задачей: модернизация финансового сектора при одновременном обеспечении соответствия экономического расширения более широким целям устойчивого развития. Стратегическое видение страны, изложенное в таких инициативах, как Стратегия Казахстан 2050 и Цифровой Казахстан, подчеркивает важность интеграции инновационных финансовых механизмов для повышения конкурентоспособности и устойчивости. Однако, несмотря на прогресс в области цифрового банкинга, внедрения финтеха и регуляторных экспериментов через Международный финансовый центр «Астана» (МФЦА), сохраняются системные барьеры, включая неравномерную финансовую инклюзивность, зависимость от ресурсно-ориентированных моделей роста и пробелы в регуляторной согласованности.",
-                introP2: "Взаимосвязь финансовых инноваций и устойчивого экономического роста остается недостаточно изученной в контексте Казахстана, особенно в отношении того, как новые финансовые инструменты могут согласовать краткосрочные экономические выгоды с долгосрочной экологической и социальной стабильностью. Существующие исследования часто изолируют технологические достижения от их макроэкономических последствий или упускают из",
+                introP1: "Основной текст данной страницы представлен на английском языке. Полный русский перевод введения доступен на последующих страницах.",
+                introP2: "",
                 continued: "[Продолжение на следующей странице]"
             },
             zh: {
                 prevBtn: "上一页",
                 nextBtn: "下一页",
                 titleEn: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
-                titleRu: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                titleRu: "ФИНАНСОВЫЕ ИННОВАЦИИ И УСТОЙЧИВЫЙ ЭКОНОМИЧЕСКИЙ РОСТ В КАЗАХСТАНЕ: ВОЗМОЖНОСТИ И ПРОБЛЕМЫ",
                 authorName: "赵杰",
                 authorAffil: "工商管理博士（DBA），<br>哈萨克斯坦国立阿尔法拉比大学，<br>哈萨克斯坦，阿拉木图",
                 abstractLabel: "摘要",
@@ -458,18 +436,15 @@
             }
         };
 
-        // 添加：页面平滑导航函数
         function navigateTo(event, url) {
-            event.preventDefault(); // 阻止默认跳转
-            document.body.classList.add('fade-out'); // 添加淡出类
+            event.preventDefault();
+            document.body.classList.add('fade-out');
             
-            // 延迟 500ms 后跳转，等待淡出动画完成
             setTimeout(() => {
                 window.location.href = url;
             }, 500);
         }
 
-        // Language switching function
         function changeLanguage(lang) {
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -501,7 +476,6 @@
             localStorage.setItem('preferred-language', lang);
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
             if (savedLang !== 'en') {
@@ -509,7 +483,6 @@
             }
         });
 
-        // 修改：键盘导航同样使用平滑过渡
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
                 document.body.classList.add('fade-out');
