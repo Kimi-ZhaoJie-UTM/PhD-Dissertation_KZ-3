@@ -291,12 +291,13 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
     <!-- Top Navigation -->
     <nav class="top-nav">
-        <a href="proceedings.html" class="nav-btn prev" data-i18n="prevBtn">
+        <a href="publicationinfo.html" class="nav-btn prev" data-i18n="prevBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -310,7 +311,8 @@
             <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
         </div>
 
-        <a href="section1.html" class="nav-btn next" data-i18n="nextBtn">
+        <!-- 修复：改为 page62.html -->
+        <a href="page62.html" class="nav-btn next" data-i18n="nextBtn">
             <span>Next Page</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -570,12 +572,12 @@
             }
         });
 
-        // Keyboard navigation
+        // Keyboard navigation - 修复：改为 page62.html
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
-                window.location.href = 'proceedings.html';
+                window.location.href = 'publicationinfo.html';
             } else if (e.key === 'ArrowRight') {
-                window.location.href = 'section1.html';
+                window.location.href = 'page62.html';
             }
         });
     </script>
