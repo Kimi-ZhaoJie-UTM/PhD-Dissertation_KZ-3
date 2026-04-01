@@ -395,7 +395,7 @@
                 Prospects and Key Tendencies of Science in Contemporary World
             </h1>
 
-            <button class="next-page-btn pulse" onclick="goToNextPage(title-page.html)" data-i18n="nextBtn">
+            <button class="next-page-btn pulse" onclick="goToNextPage()" data-i18n="nextBtn">
                 <span class="btn-text">Proceed to Contents</span>
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -473,21 +473,15 @@
             localStorage.setItem('preferred-language', lang);
         }
 
-        // Next page navigation function
-        function goToNextPage(title-page.html) {
+        // Next page navigation function - 修复：移除非法参数名
+        function goToNextPage() {
             // Add exit animation
             const btn = document.querySelector('.next-page-btn');
             btn.style.transform = 'scale(0.95)';
             
             setTimeout(() => {
-                // Option 1: Navigate to contents.html (if you create a separate file)
-                window.location.href = 'contents.html';
-                
-                // Option 2: Smooth scroll to contents section (if single page app)
-                // document.getElementById('contents').scrollIntoView({ behavior: 'smooth' });
-                
-                // Option 3: Alert for demonstration (remove in production)
-                // alert('Navigation to Contents page');
+                // 修复：跳转到 proceedings.html（第二页）
+                window.location.href = 'proceedings.html';
             }, 200);
         }
 
@@ -504,10 +498,10 @@
             });
         });
 
-        // Keyboard navigation support
+        // Keyboard navigation support - 修复：移除非法参数
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === 'ArrowRight') {
-                goToNextPage(title-page.html);
+                goToNextPage();
             }
         });
     </script>
