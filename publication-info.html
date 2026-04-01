@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publication Info - Internauka Conference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        /* Top Navigation Bar - Consistent with previous pages */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            width: 100%;
+        }
+
+        /* Publication Info Block */
+        .pub-info {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .conference-ref {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .pub-details {
+            font-size: 15px;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        /* Section Styling */
+        .info-section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .editor-chief {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            margin-left: 20px;
+        }
+
+        .editor-name {
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .editor-title {
+            display: block;
+            margin-left: 20px;
+            margin-top: 5px;
+            color: #555;
+            font-size: 15px;
+        }
+
+        /* Editorial Board Grid */
+        .board-list {
+            list-style: none;
+            margin-left: 20px;
+        }
+
+        .board-member {
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .member-name {
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .member-degree {
+            color: #666;
+        }
+
+        /* Repository Section */
+        .repository-section {
+            margin: 40px 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .repo-text {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .repo-logo {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 8px 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 18px;
+            border-radius: 4px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Footer Info */
+        .footer-info {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #c2185b;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .isbn-block {
+            font-size: 15px;
+            color: #444;
+        }
+
+        .isbn-number {
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        .copyright-block {
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .content-container {
+                padding: 40px 25px;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .copyright-block {
+                text-align: left;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="proceedings.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="contents.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        
+        <!-- Publication Reference -->
+        <div class="pub-info">
+            <p class="conference-ref" data-i18n="pubRef">
+                LVIII International Multidisciplinary Conference "Prospects and Key Tendencies of Science in Contemporary World". Proceedings of the Conference (August, 2025). Bubok Publishing S.L., Madrid, Spain. 2025. 70 p.
+            </p>
+        </div>
+
+        <!-- Editor-in-Chief -->
+        <section class="info-section">
+            <h2 class="section-title" data-i18n="editorTitle">Editor-in-Chief:</h2>
+            <div class="editor-chief" data-i18n="editorContent">
+                <span class="editor-name">Nina Khodakova</span> – Doctor of Pedagogical Sciences, Professor of Moscow City Pedagogical University, Corresponding Member of Academy of Education Informatization, Professor of European and International Academy of Natural Sciences, Honorary Professor and Honorary Doctor of Sciences of the Russian Academy of Natural Sciences, Moscow
+            </div>
+        </section>
+
+        <!-- Editorial Board -->
+        <section class="info-section">
+            <h2 class="section-title" data-i18n="boardTitle">Editorial Board:</h2>
+            <ul class="board-list" data-i18n="boardList">
+                <li class="board-member">
+                    <span class="member-name">Oleg Abyalimov</span> <span class="member-degree">- Candidate of Technical Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Zagir Ataev</span> <span class="member-degree">- Candidate of Geographical Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Bakhodur Karimov</span> <span class="member-degree">– Candidate of Economic Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Khotamjon Kobulov</span> <span class="member-degree">– Candidate of Economic Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Lamjav Olzvoibaatar</span> <span class="member-degree">– Doctor of Technical Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Erkin Mirmakhmudov</span> <span class="member-degree">- Candidate of Physical and Mathematical Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Svetlana Novikova</span> <span class="member-degree">- Candidate of Pedagogical Sciences;</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Igor Chebotnyagin</span> <span class="member-degree">- consultant TMAC (Texas Manufacturing Assistance Center);</span>
+                </li>
+                <li class="board-member">
+                    <span class="member-name">Elena Sherstyannikova</span> <span class="member-degree">- Candidate of Philological Sciences.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Repository Info -->
+        <section class="repository-section">
+            <p class="repo-text" data-i18n="repoText">Included to the open access repositories:</p>
+            <div class="repo-logo">eLIBRARY.RU</div>
+        </section>
+
+        <!-- Footer Info -->
+        <footer class="footer-info">
+            <div class="isbn-block">
+                <div data-i18n="isbnLabel">ISBN</div>
+                <div class="isbn-number">978-84-685-5375-7</div>
+            </div>
+            
+            <div class="copyright-block" data-i18n="copyright">
+                © Bubok Publishing S.L., 2025<br>
+                © Internauka, LLC, 2025
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                pubRef: "LVIII International Multidisciplinary Conference \"Prospects and Key Tendencies of Science in Contemporary World\". Proceedings of the Conference (August, 2025). Bubok Publishing S.L., Madrid, Spain. 2025. 70 p.",
+                editorTitle: "Editor-in-Chief:",
+                editorContent: "<span class='editor-name'>Nina Khodakova</span> – Doctor of Pedagogical Sciences, Professor of Moscow City Pedagogical University, Corresponding Member of Academy of Education Informatization, Professor of European and International Academy of Natural Sciences, Honorary Professor and Honorary Doctor of Sciences of the Russian Academy of Natural Sciences, Moscow",
+                boardTitle: "Editorial Board:",
+                boardList: `
+                    <li class='board-member'><span class='member-name'>Oleg Abyalimov</span> <span class='member-degree'>- Candidate of Technical Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Zagir Ataev</span> <span class='member-degree'>- Candidate of Geographical Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Bakhodur Karimov</span> <span class='member-degree'>– Candidate of Economic Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Khotamjon Kobulov</span> <span class='member-degree'>– Candidate of Economic Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Lamjav Olzvoibaatar</span> <span class='member-degree'>– Doctor of Technical Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Erkin Mirmakhmudov</span> <span class='member-degree'>- Candidate of Physical and Mathematical Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Svetlana Novikova</span> <span class='member-degree'>- Candidate of Pedagogical Sciences;</span></li>
+                    <li class='board-member'><span class='member-name'>Igor Chebotnyagin</span> <span class='member-degree'>- consultant TMAC (Texas Manufacturing Assistance Center);</span></li>
+                    <li class='board-member'><span class='member-name'>Elena Sherstyannikova</span> <span class='member-degree'>- Candidate of Philological Sciences.</span></li>
+                `,
+                repoText: "Included to the open access repositories:",
+                isbnLabel: "ISBN",
+                copyright: "© Bubok Publishing S.L., 2025<br>© Internauka, LLC, 2025"
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                pubRef: "LVIII Международная мультидисциплинарная конференция «Перспективы и ключевые тенденции науки в современном мире». Материалы конференции (август 2025 г.). Издательство Bubok S.L., Мадрид, Испания. 2025. 70 с.",
+                editorTitle: "Главный редактор:",
+                editorContent: "<span class='editor-name'>Нина Ходакова</span> – доктор педагогических наук, профессор Московского городского педагогического университета, член-корреспондент Академии информатизации образования, профессор Европейской и Международной академии естественных наук, заслуженный профессор и почетный доктор наук Российской академии естественных наук, Москва",
+                boardTitle: "Редакционная коллегия:",
+                boardList: `
+                    <li class='board-member'><span class='member-name'>Олег Абялимов</span> <span class='member-degree'>- кандидат технических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Загир Атаев</span> <span class='member-degree'>- кандидат географических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Баходур Каримов</span> <span class='member-degree'>– кандидат экономических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Хотамжон Кобулов</span> <span class='member-degree'>– кандидат экономических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Ламжав Олзвойбаатар</span> <span class='member-degree'>– доктор технических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Эркин Мирмахмудов</span> <span class='member-degree'>- кандидат физико-математических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Светлана Новикова</span> <span class='member-degree'>- кандидат педагогических наук;</span></li>
+                    <li class='board-member'><span class='member-name'>Игорь Чеботнягин</span> <span class='member-degree'>- консультант TMAC (Центр содействия производству Техаса);</span></li>
+                    <li class='board-member'><span class='member-name'>Елена Шерстьянникова</span> <span class='member-degree'>- кандидат филологических наук.</span></li>
+                `,
+                repoText: "Включено в репозитории открытого доступа:",
+                isbnLabel: "ISBN",
+                copyright: "© Bubok Publishing S.L., 2025<br>© Интернаука, ООО, 2025"
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                pubRef: "第五十八届国际多学科会议「当代世界科学的前景与主要趋势」。会议论文集（2025年8月）。Bubok 出版公司，西班牙马德里。2025年。70页。",
+                editorTitle: "主编：",
+                editorContent: "<span class='editor-name'>尼娜·霍达科娃</span> – 教育科学博士，莫斯科市立师范大学教授，教育信息化研究院通讯院士，欧洲与国际自然科学院教授，俄罗斯自然科学院名誉教授及名誉博士",
+                boardTitle: "编委会：",
+                boardList: `
+                    <li class='board-member'><span class='member-name'>奥列格·阿比亚利莫夫</span> <span class='member-degree'>- 技术科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>扎吉尔·阿塔耶夫</span> <span class='member-degree'>- 地理科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>巴赫杜尔·卡里莫夫</span> <span class='member-degree'>- 经济科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>霍塔姆琼·科布洛夫</span> <span class='member-degree'>- 经济科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>拉姆贾夫·奥尔兹沃伊巴塔尔</span> <span class='member-degree'>- 技术科学博士；</span></li>
+                    <li class='board-member'><span class='member-name'>埃尔金·米尔马赫穆多夫</span> <span class='member-degree'>- 物理数学科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>斯韦特兰娜·诺维科娃</span> <span class='member-degree'>- 教育科学副博士；</span></li>
+                    <li class='board-member'><span class='member-name'>伊戈尔·切博特尼亚金</span> <span class='member-degree'>- 德克萨斯制造业援助中心顾问；</span></li>
+                    <li class='board-member'><span class='member-name'>叶莲娜·谢尔斯佳尼科娃</span> <span class='member-degree'>- 语言学副博士。</span></li>
+                `,
+                repoText: "收录于开放获取知识库：",
+                isbnLabel: "ISBN",
+                copyright: "© Bubok 出版公司，2025<br>© Internauka 有限责任公司，2025"
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(5px)';
+                element.style.transition = 'all 0.2s ease';
+                
+                setTimeout(() => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (key === 'boardList') {
+                            element.innerHTML = translations[lang][key];
+                        } else if (key === 'editorContent' || key === 'copyright') {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + (index * 50));
+            });
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'proceedings.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'contents.html';
+            }
+        });
+    </script>
+</body>
+</html>
