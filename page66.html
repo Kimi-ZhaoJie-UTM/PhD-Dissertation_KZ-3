@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Innovation in Kazakhstan - Internauka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg { transform: translateX(-3px); }
+        .nav-btn.next:hover svg { transform: translateX(3px); }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px 100px;
+            width: 100%;
+        }
+
+        /* Article Header */
+        .article-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .section-label {
+            font-size: 14px;
+            color: #c2185b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #222;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #444;
+            font-style: normal;
+        }
+
+        /* Subsection Title */
+        .subsection-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            margin: 40px 0 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        /* Body Text */
+        .article-body {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .article-body p {
+            margin-bottom: 20px;
+            text-indent: 0;
+        }
+
+        /* Highlighted Terms */
+        .term {
+            color: #c2185b;
+            font-weight: 600;
+        }
+
+        /* Page Number Indicator */
+        .page-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            background: rgba(194, 24, 89, 0.1);
+            color: #c2185b;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 50;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .content-container {
+                padding: 40px 25px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-body {
+                font-size: 16px;
+                text-align: left;
+            }
+
+            .page-indicator {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .top-nav, .page-indicator {
+                display: none;
+            }
+        }
+
+        /* Smooth transitions for language switch */
+        .article-title, .article-body, .subsection-title {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transform: translateY(10px) !important;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="page67.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <header class="article-header">
+            <span class="section-label" data-i18n="sectionLabel">Section 7. Economics</span>
+            <h1 class="article-title" data-i18n="articleTitle">
+                Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges
+            </h1>
+            <div class="article-meta">
+                <span data-i18n="authorPrefix">By </span>
+                <span class="author-name" data-i18n="authorName">Zhao Jie</span>
+                <span data-i18n="authorSuffix">, Doctor of Business Administration (DBA), Al-Farabi Kazakh National University</span>
+            </div>
+        </header>
+
+        <h2 class="subsection-title" data-i18n="subsectionTitle">Financial Innovation in Kazakhstan: Current State</h2>
+
+        <div class="article-body" data-i18n="articleBody">
+            <p>as the <span class="term">Astana International Financial Centre</span>. Established as a platform for financial services innovation, the Centre has implemented cutting-edge solutions in mobile banking, digital asset management, and blockchain-based transactions, creating an ecosystem that facilitates cross-border investment while maintaining robust regulatory standards. Parallel developments in retail banking demonstrate significant progress in financial inclusion, with mobile payment platforms achieving substantial penetration in both urban and rural markets, effectively reducing traditional barriers to financial access.</p>
+
+            <p>Regulatory frameworks governing financial innovation have undergone systematic enhancement to accommodate emerging technologies while mitigating associated risks. The introduction of <span class="term">regulatory sandbox</span> mechanisms represents a particularly noteworthy advancement, enabling controlled testing environments for innovative financial products without compromising systemic stability. This approach has proven instrumental in fostering cryptocurrency-related businesses while maintaining necessary oversight, as evidenced by the gradual implementation of comprehensive digital asset regulations. The regulatory evolution reflects a balanced perspective that encourages technological experimentation while preserving fundamental financial safeguards, illustrating Kazakhstan's commitment to becoming a regional leader in fintech governance.</p>
+
+            <p>Strategic government initiatives constitute the primary domestic impetus for financial innovation, with the <span class="term">Digital Kazakhstan 2025</span> program serving as the cornerstone of this transformation. This comprehensive roadmap prioritizes the digitization of financial services as a key component of national economic modernization, allocating substantial resources to infrastructure development and digital literacy programs. The program's implementation has yielded measurable outcomes, particularly in the expansion of cashless transactions and the integration of artificial intelligence in financial decision-making processes. These developments align with broader economic diversification objectives, gradually reducing the historical dependence on extractive industries through the cultivation of a knowledge-based financial sector.</p>
+
+            <p>External economic influences further shape Kazakhstan's financial innovation trajectory, with participation in the <span class="term">Eurasian Economic Union</span> creating both opportunities and challenges for financial integration. The harmonization of payment systems and banking regulations across member states facilitates capital mobility while necessitating adaptive policy responses to maintain national financial sovereignty. China's <span class="term">Belt and Road Initiative</span> contributes additional dimensions to this dynamic, generating increased demand for innovative cross-border financing solutions and stimulating infrastructure-related financial products. These external factors interact with domestic priorities to create a unique financial innovation environment that reflects <span class="term">both global trends and local economic requirements</span>.</p>
+        </div>
+    </main>
+
+    <!-- Page Number -->
+    <div class="page-indicator">66</div>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                sectionLabel: "Section 7. Economics",
+                articleTitle: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
+                authorPrefix: "By ",
+                authorName: "Zhao Jie",
+                authorSuffix: ", Doctor of Business Administration (DBA), Al-Farabi Kazakh National University",
+                subsectionTitle: "Financial Innovation in Kazakhstan: Current State",
+                articleBody: `<p>as the <span class="term">Astana International Financial Centre</span>. Established as a platform for financial services innovation, the Centre has implemented cutting-edge solutions in mobile banking, digital asset management, and blockchain-based transactions, creating an ecosystem that facilitates cross-border investment while maintaining robust regulatory standards. Parallel developments in retail banking demonstrate significant progress in financial inclusion, with mobile payment platforms achieving substantial penetration in both urban and rural markets, effectively reducing traditional barriers to financial access.</p>
+
+            <p>Regulatory frameworks governing financial innovation have undergone systematic enhancement to accommodate emerging technologies while mitigating associated risks. The introduction of <span class="term">regulatory sandbox</span> mechanisms represents a particularly noteworthy advancement, enabling controlled testing environments for innovative financial products without compromising systemic stability. This approach has proven instrumental in fostering cryptocurrency-related businesses while maintaining necessary oversight, as evidenced by the gradual implementation of comprehensive digital asset regulations. The regulatory evolution reflects a balanced perspective that encourages technological experimentation while preserving fundamental financial safeguards, illustrating Kazakhstan's commitment to becoming a regional leader in fintech governance.</p>
+
+            <p>Strategic government initiatives constitute the primary domestic impetus for financial innovation, with the <span class="term">Digital Kazakhstan 2025</span> program serving as the cornerstone of this transformation. This comprehensive roadmap prioritizes the digitization of financial services as a key component of national economic modernization, allocating substantial resources to infrastructure development and digital literacy programs. The program's implementation has yielded measurable outcomes, particularly in the expansion of cashless transactions and the integration of artificial intelligence in financial decision-making processes. These developments align with broader economic diversification objectives, gradually reducing the historical dependence on extractive industries through the cultivation of a knowledge-based financial sector.</p>
+
+            <p>External economic influences further shape Kazakhstan's financial innovation trajectory, with participation in the <span class="term">Eurasian Economic Union</span> creating both opportunities and challenges for financial integration. The harmonization of payment systems and banking regulations across member states facilitates capital mobility while necessitating adaptive policy responses to maintain national financial sovereignty. China's <span class="term">Belt and Road Initiative</span> contributes additional dimensions to this dynamic, generating increased demand for innovative cross-border financing solutions and stimulating infrastructure-related financial products. These external factors interact with domestic priorities to create a unique financial innovation environment that reflects <span class="term">both global trends and local economic requirements</span>.</p>`
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                sectionLabel: "Раздел 7. Экономика",
+                articleTitle: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                authorPrefix: "Автор: ",
+                authorName: "Чжао Цзе",
+                authorSuffix: ", доктор делового администрирования (DBA), Казахский национальный университет имени аль-Фараби",
+                subsectionTitle: "Финансовые инновации в Казахстане: текущее состояние",
+                articleBody: `<p>таких инициатив, как <span class="term">Международный финансовый центр «Астана»</span> (МФЦА). Созданный как платформа для инноваций в сфере финансовых услуг, Центр внедрил передовые решения в области мобильного банкинга, управления цифровыми активами и транзакций на основе блокчейна, создавая экосистему, способствующую трансграничным инвестициям при сохранении надежных регуляторных стандартов. Параллельное развитие розничного банкинга демонстрирует значительный прогресс в области финансовой инклюзивности: платформы мобильных платежей достигли существенного проникновения как в городские, так и в сельские рынки, эффективно снижая традиционные барьеры для доступа к финансовым услугам.</p>
+
+            <p>Регуляторные рамки, регулирующие финансовые инновации, претерпели систематическое совершенствование для адаптации к emerging technologies при одновременном смягчении связанных с ними рисков. Введение механизмов <span class="term">регуляторной песочницы</span> представляет собой особенно примечательное достижение, обеспечивая контролируемые условия тестирования для инновационных финансовых продуктов без ущерба для системной стабильности. Этот подход оказался инструментальным в развитии бизнеса, связанного с криптовалютами, при сохранении необходимого надзора, что подтверждается постепенным внедрением комплексных регламентов по цифровым активам. Эволюция регулирования отражает сбалансированный подход, поощряющий технологические эксперименты при сохранении фундаментальных финансовых гарантий, иллюстрируя приверженность Казахстана становлению региональным лидером в области управления финансовыми технологиями.</p>
+
+            <p>Стратегические правительственные инициативы составляют основной внутренний импульс для финансовых инноваций, причем программа <span class="term">«Цифровой Казахстан 2025»</span> выступает краеугольным камнем этой трансформации. Эта комплексная дорожная карта приоритизирует цифровизацию финансовых услуг как ключевой компонент модернизации национальной экономики, выделяя существенные ресурсы на развитие инфраструктуры и программы цифровой грамотности. Реализация программы дала измеримые результаты, особенно в расширении безналичных транзакций и интеграции искусственного интеллекта в процессы принятия финансовых решений. Эти разработки соответствуют более широким целям диверсификации экономики, постепенно снижая историческую зависимость от добывающих отраслей через развитие финансового сектора, основанного на знаниях.</p>
+
+            <p>Внешние экономические влияния дополнительно формируют траекторию финансовых инноваций Казахстана: участие в <span class="term">Евразийском экономическом союзе</span> создает как возможности, так и вызовы для финансовой интеграции. Гармонизация платежных систем и банковского регулирования между государствами-членами облегчает мобильность капитала, одновременно требуя адаптивных политических ответов для сохранения национального финансового суверенитета. Инициатива <span class="term">«Один пояс, один путь»</span> Китая вносит дополнительные измерения в эту динамику, генерируя повышенный спрос на инновационные трансграничные финансовые решения и стимулируя инфраструктурные финансовые продукты. Эти внешние факторы взаимодействуют с внутренними приоритетами для создания уникальной среды финансовых инноваций, отражающей <span class="term">как глобальные тенденции, так и местные экономические требования</span>.</p>`
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                sectionLabel: "第7节 经济学",
+                articleTitle: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
+                authorPrefix: "作者：",
+                authorName: "赵洁",
+                authorSuffix: "，工商管理博士（DBA），阿尔-法拉比哈萨克斯坦国立大学",
+                subsectionTitle: "哈萨克斯坦的金融创新：现状",
+                articleBody: `<p>如<span class="term">阿斯塔纳国际金融中心</span>（AIFC）。该中心作为金融服务创新平台而建立，已在移动银行、数字资产管理和基于区块链的交易领域实施了尖端解决方案，创建了一个促进跨境投资同时保持稳健监管标准的生态系统。零售银行的并行发展显示出金融包容性方面的显著进步，移动支付平台在城市和农村市场均实现了实质性渗透，有效降低了传统金融准入壁垒。</p>
+
+            <p>管理金融创新的监管框架经历了系统性加强，以适应新兴技术同时减轻相关风险。<span class="term">监管沙盒</span>机制的引入代表了一项特别值得注意的进展，使得创新金融产品能够在受控的测试环境中进行试验，而不损害系统稳定性。这种方法已被证明对培育加密货币相关业务具有重要作用，同时保持必要的监督，这一点从全面数字资产法规的逐步实施中得到证实。监管演变反映了一种平衡的视角，既鼓励技术实验，又保护基本金融保障措施，展示了哈萨克斯坦致力于成为金融科技治理区域领导者的决心。</p>
+
+            <p>战略性政府举措构成了金融创新的主要国内动力，其中<span class="term">"数字哈萨克斯坦2025"</span>计划作为这一转型的基石。这一全面的路线图将金融服务的数字化作为国家经济现代化的关键组成部分，为基础设施建设和数字扫盲项目分配了大量资源。该计划的实施已产生可衡量的成果，特别是在无现金交易的扩展和人工智能在金融决策过程中的整合方面。这些发展符合更广泛的经济多元化目标，通过培育知识型金融部门，逐步减少对采掘业的历史依赖。</p>
+
+            <p>外部经济影响进一步塑造了哈萨克斯坦的金融创新轨迹，参与<span class="term">欧亚经济联盟</span>为金融一体化创造了机遇和挑战。成员国之间支付系统和银行法规的协调促进了资本流动性，同时需要采取适应性政策回应以维护国家金融主权。中国的<span class="term">"一带一路"倡议</span>为这一动态贡献了额外的维度，产生了对创新跨境融资解决方案的日益增长的需求，并刺激了与基础设施相关的金融产品。这些外部因素与国内优先事项相互作用，创造了一个独特的金融创新环境，反映了<span class="term">全球趋势和本地经济需求</span>。</p>`
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Fade out content
+            const elements = ['articleTitle', 'articleBody', 'subsectionTitle', 'sectionLabel', 'authorName'];
+            
+            elements.forEach(id => {
+                const el = document.querySelector(`[data-i18n="${id}"]`);
+                if (el) {
+                    el.classList.add('fade-out');
+                }
+            });
+
+            // Update content and fade in
+            setTimeout(() => {
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (key === 'authorPrefix' || key === 'authorSuffix') {
+                            element.textContent = translations[lang][key];
+                        } else if (key === 'authorName') {
+                            element.textContent = translations[lang][key];
+                        } else if (key === 'articleBody') {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                    element.classList.remove('fade-out');
+                });
+            }, 300);
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'contents.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'page67.html';
+            }
+        });
+    </script>
+</body>
+</html>
