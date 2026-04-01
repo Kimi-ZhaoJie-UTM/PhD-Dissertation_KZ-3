@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Innovation in Kazakhstan - Internauka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation - Consistent with previous pages */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            width: 100%;
+        }
+
+        /* Article Header */
+        .article-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .section-label {
+            color: #c2185b;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .article-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+
+        .article-author {
+            font-size: 18px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .page-number {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 5px 15px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        /* Article Content */
+        .article-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            text-indent: 0;
+        }
+
+        .article-content h2 {
+            font-size: 22px;
+            color: #222;
+            margin: 40px 0 20px 0;
+            font-weight: 700;
+            border-left: 4px solid #c2185b;
+            padding-left: 15px;
+        }
+
+        /* Highlight box for specific content */
+        .content-box {
+            background: rgba(194, 24, 89, 0.03);
+            border-left: 4px solid #c2185b;
+            padding: 20px 25px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .content-container {
+                padding: 40px 25px;
+            }
+
+            .article-title {
+                font-size: 22px;
+            }
+
+            .article-content {
+                font-size: 16px;
+                text-align: left;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="page66.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <header class="article-header">
+            <div class="section-label" data-i18n="sectionLabel">Section 7. Economics</div>
+            <h1 class="article-title" data-i18n="articleTitle">
+                Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges
+            </h1>
+            <div class="article-author" data-i18n="author">Zhao Jie</div>
+            <div class="page-number">65</div>
+        </header>
+
+        <article class="article-content" data-i18n="content">
+            <p>frameworks capable of accommodating rapid advancements while safeguarding economic stability. The transformative potential of financial innovation thus extends beyond operational efficiency, fostering systemic resilience and inclusivity qualities that are indispensable for sustainable economic development.</p>
+
+            <p>The framework for sustainable economic growth provides a lens through which the implications of financial innovation can be critically assessed. Sustainability, in this context, is defined by three interdependent criteria: inclusivity, environmental stewardship, and long-term resilience. Inclusivity ensures that financial systems serve broad demographic segments, reducing disparities in access to capital and financial services. Environmental sustainability demands that economic activities minimize ecological degradation, a principle increasingly operationalized through green finance mechanisms. Resilience, the third pillar, underscores the capacity of economic systems to withstand external shocks, a quality inherently strengthened by diversified and adaptive infrastructures.</p>
+
+            <p>The role of innovation in sustaining long-term growth is theoretically anchored in Schumpeterian economics, which posits that economic progress is driven by cyclical waves of creative destruction. According to this perspective, financial innovation acts as a catalyst for such cycles, enabling the reallocation of resources toward more productive and sustainable ventures. By disrupting obsolete financial practices, innovation generates new opportunities for investment, employment, and technological advancement, thereby propelling macroeconomic growth[3]. However, this process is not without challenges, as it requires balancing disruptive potential with regulatory oversight to prevent systemic instability. The interplay between innovation and sustainability thus forms a complex but critical nexus for contemporary economic research, particularly in transitional economies like Kazakhstan, where financial modernization must be carefully calibrated to support both immediate developmental goals and long-term ecological and social stability.</p>
+
+            <p>The integration of these theoretical perspectives underscores the necessity of a holistic approach to financial innovation one that harmonizes technological progress with institutional adaptability and sustainability imperatives. This alignment is essential for ensuring that financial systems not only drive economic expansion but also contribute to equitable and enduring prosperity.</p>
+
+            <h2>Financial Innovation in Kazakhstan: Current State</h2>
+
+            <p>The contemporary landscape of financial innovation in Kazakhstan reflects a strategic integration of technological advancement and regulatory modernization, positioning the country as an emerging hub for financial transformation in Central Asia. This evolution manifests most prominently in the rapid development of digital finance infrastructure, spearheaded by institutional initiatives such</p>
+        </article>
+    </main>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                sectionLabel: "Section 7. Economics",
+                articleTitle: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
+                author: "Zhao Jie",
+                content: `<p>frameworks capable of accommodating rapid advancements while safeguarding economic stability. The transformative potential of financial innovation thus extends beyond operational efficiency, fostering systemic resilience and inclusivity qualities that are indispensable for sustainable economic development.</p>
+
+<p>The framework for sustainable economic growth provides a lens through which the implications of financial innovation can be critically assessed. Sustainability, in this context, is defined by three interdependent criteria: inclusivity, environmental stewardship, and long-term resilience. Inclusivity ensures that financial systems serve broad demographic segments, reducing disparities in access to capital and financial services. Environmental sustainability demands that economic activities minimize ecological degradation, a principle increasingly operationalized through green finance mechanisms. Resilience, the third pillar, underscores the capacity of economic systems to withstand external shocks, a quality inherently strengthened by diversified and adaptive infrastructures.</p>
+
+<p>The role of innovation in sustaining long-term growth is theoretically anchored in Schumpeterian economics, which posits that economic progress is driven by cyclical waves of creative destruction. According to this perspective, financial innovation acts as a catalyst for such cycles, enabling the reallocation of resources toward more productive and sustainable ventures. By disrupting obsolete financial practices, innovation generates new opportunities for investment, employment, and technological advancement, thereby propelling macroeconomic growth[3]. However, this process is not without challenges, as it requires balancing disruptive potential with regulatory oversight to prevent systemic instability. The interplay between innovation and sustainability thus forms a complex but critical nexus for contemporary economic research, particularly in transitional economies like Kazakhstan, where financial modernization must be carefully calibrated to support both immediate developmental goals and long-term ecological and social stability.</p>
+
+<p>The integration of these theoretical perspectives underscores the necessity of a holistic approach to financial innovation one that harmonizes technological progress with institutional adaptability and sustainability imperatives. This alignment is essential for ensuring that financial systems not only drive economic expansion but also contribute to equitable and enduring prosperity.</p>
+
+<h2>Financial Innovation in Kazakhstan: Current State</h2>
+
+<p>The contemporary landscape of financial innovation in Kazakhstan reflects a strategic integration of technological advancement and regulatory modernization, positioning the country as an emerging hub for financial transformation in Central Asia. This evolution manifests most prominently in the rapid development of digital finance infrastructure, spearheaded by institutional initiatives such</p>`
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                sectionLabel: "Раздел 7. Экономика",
+                articleTitle: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                author: "Чжао Цзе",
+                content: `<p>рамок, способных адаптироваться к стремительным достижениям, обеспечивая при этом экономическую стабильность. Таким образом, трансформативный потенциал финансовых инноваций выходит за рамки операционной эффективности, способствуя формированию системной устойчивости и инклюзивности — качеств, незаменимых для устойчивого экономического развития.</p>
+
+<p>Концепция устойчивого экономического роста предоставляет призму, через которую можно критически оценить последствия финансовых инноваций. В этом контексте устойчивость определяется тремя взаимозависимыми критериями: инклюзивность, экологическая ответственность и долгосрочная устойчивость. Инклюзивность гарантирует, что финансовые системы обслуживают широкие демографические сегменты, сокращая диспропорции в доступе к капиталу и финансовым услугам. Экологическая устойчивость требует минимизации экологической деградации экономической деятельностью — принцип, все чаще реализуемый через механизмы зеленых финансов. Устойчивость, третий столп, подчеркивает способность экономических систем противостоять внешним шокам, качество, которое приобретает особую значимость благодаря диверсифицированной и адаптивной инфраструктуре.</p>
+
+<p>Роль инноваций в поддержании долгосрочного роста теоретически обоснована в рамках шумпетерианской экономики, которая утверждает, что экономический прогресс движется циклическими волнами творческого разрушения. Согласно этой перспективе, финансовые инновации выступают катализатором таких циклов, обеспечивая перераспределение ресурсов в сторону более продуктивных и устойчивых предприятий. Разрушая устаревшие финансовые практики, инновации создают новые возможности для инвестиций, занятости и технологического прогресса, тем самым стимулируя макроэкономический рост[3]. Однако этот процесс не лишен вызовов, поскольку требует баланса между деструктивным потенциалом и регуляторным надзором для предотвращения системной нестабильности. Таким образом, взаимодействие между инновациями и устойчивостью формирует сложный, но критически важный нексус для современных экономических исследований, особенно в переходных экономиках, таких как Казахстан, где финансовая модернизация должна тщательно калиброваться для поддержки как ближайших целей развития, так и долгосрочной экологической и социальной стабильности.</p>
+
+<p>Интеграция этих теоретических перспектив подчеркивает необходимость целостного подхода к финансовым инновациям — подхода, который гармонизирует технологический прогресс с институциональной адаптивностью и императивами устойчивости. Такое выравнивание необходимо для обеспечения того, чтобы финансовые системы не только стимулировали экономическую экспансию, но и способствовали справедливому и устойчивому процветанию.</p>
+
+<h2>Финансовые инновации в Казахстане: текущее состояние</h2>
+
+<p>Современная картина финансовых инноваций в Казахстане отражает стратегическую интеграцию технологического прогресса и регуляторной модернизации, позиционируя страну как возникающий центр финансовой трансформации в Центральной Азии. Эта эволюция наиболее ярко проявляется в стремительном развитии инфраструктуры цифровых финансов, возглавляемом институциональными инициативами, такими</p>`
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                sectionLabel: "第7节 经济学",
+                articleTitle: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
+                author: "赵洁",
+                content: `<p>能够适应快速发展同时保障经济稳定的框架。因此，金融创新的变革潜力超越了运营效率，培养了对于可持续经济发展不可或缺的系统韧性和包容性品质。</p>
+
+<p>可持续经济增长框架提供了一个视角，通过它可以批判性地评估金融创新的影响。在这种背景下，可持续性由三个相互依存的标准定义：包容性、环境管理和长期韧性。包容性确保金融系统服务于广泛的人口群体，减少获得资本和金融服务的差异。环境可持续性要求经济活动最大限度地减少对生态的破坏，这一原则越来越多地通过绿色金融机制来实现。韧性作为第三大支柱，强调了经济系统抵御外部冲击的能力，这种品质通过多元化和适应性基础设施得到内在加强。</p>
+
+<p>创新在维持长期增长中的作用在熊彼特经济学中有理论基础，该理论认为经济进步是由创造性破坏的周期性浪潮驱动的。根据这一观点，金融创新充当这种浪潮的催化剂，使资源能够重新配置到更富成效和可持续的企业中。通过打破过时的金融实践，创新为投资、就业和技术进步创造了新的机会，从而推动宏观经济增长[3]。然而，这一过程并非没有挑战，因为它需要在颠覆性潜力与监管监督之间取得平衡，以防止系统性不稳定。因此，创新与可持续性之间的相互作用形成了当代经济研究中一个复杂但关键的联系，特别是在像哈萨克斯坦这样的转型经济体中，金融现代化必须经过仔细校准，以支持既定期发展目标以及长期的生态和社会稳定。</p>
+
+<p>这些理论视角的整合强调了采取整体性方法进行金融创新的必要性——一种将技术进步与制度适应性和可持续性要求相协调的方法。这种协调对于确保金融系统不仅推动经济扩张，而且有助于实现公平和持久的繁荣至关重要。</p>
+
+<h2>哈萨克斯坦的金融创新：现状</h2>
+
+<p>哈萨克斯坦金融创新的当代图景反映了技术进步与监管现代化的战略整合，使该国成为中亚金融转型的新兴中心。这种演变最显著地体现在数字金融基础设施的快速发展中，其由制度倡议牵头，如</p>`
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(5px)';
+                element.style.transition = 'all 0.2s ease';
+                
+                setTimeout(() => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (key === 'content') {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + (index * 50));
+            });
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize with saved preference or default
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'contents.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'page66.html';
+            }
+        });
+    </script>
+</body>
+</html>
