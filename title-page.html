@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceedings - Internauka Conference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Language Switcher - Consistent with Page 1 */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .logo-box {
+            background: #555;
+            padding: 12px 25px;
+            display: inline-block;
+            transform: skew(-5deg);
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-style: italic;
+            transform: skew(5deg);
+            display: block;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+
+        .logo-sub {
+            color: #777;
+            font-size: 16px;
+            margin-top: 4px;
+            letter-spacing: 2px;
+            font-weight: 400;
+            transform: skew(5deg);
+            display: block;
+        }
+
+        /* Title Section */
+        .title-section {
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .main-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #222;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #555;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        /* Meta Info */
+        .meta-info {
+            margin-top: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .date {
+            font-size: 20px;
+            color: #444;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .location-bottom {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            margin-top: 80px;
+        }
+
+        /* Decorative subtle wave at bottom */
+        .bottom-decoration {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .wave-line-bottom {
+            fill: none;
+            stroke: #c2185b;
+            stroke-width: 1.5;
+            opacity: 0.4;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .content-container {
+                padding: 30px 25px;
+            }
+
+            .main-title {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .logo-text {
+                font-size: 28px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+            .content-container {
+                page-break-after: always;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="index.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="contents.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <div class="logo-section">
+            <div class="logo-box">
+                <span class="logo-text">INTERNAUKA</span>
+            </div>
+            <span class="logo-sub">internauka.org</span>
+        </div>
+
+        <div class="title-section">
+            <h1 class="main-title" data-i18n="mainTitle">
+                Prospects and Key Tendencies of Science in Contemporary World
+            </h1>
+            <p class="subtitle" data-i18n="subtitle">
+                Proceedings of LVIII International Multidisciplinary Conference
+            </p>
+        </div>
+
+        <div class="meta-info">
+            <div class="date" data-i18n="date">August, 2025</div>
+            
+            <div class="location-bottom" data-i18n="location">
+                Madrid, Spain<br>2025
+            </div>
+        </div>
+
+        <!-- Subtle bottom wave decoration -->
+        <div class="bottom-decoration">
+            <svg width="100%" height="100%" viewBox="0 0 1200 150" preserveAspectRatio="none">
+                <path class="wave-line-bottom" d="M0,75 Q300,50 600,75 T1200,75" />
+                <path class="wave-line-bottom" d="M0,100 Q300,75 600,100 T1200,100" opacity="0.6"/>
+                <path class="wave-line-bottom" d="M0,125 Q300,100 600,125 T1200,125" opacity="0.3"/>
+            </svg>
+        </div>
+    </main>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                mainTitle: "Prospects and Key Tendencies of Science in Contemporary World",
+                subtitle: "Proceedings of LVIII International Multidisciplinary Conference",
+                date: "August, 2025",
+                location: "Madrid, Spain<br>2025"
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                mainTitle: "Перспективы и ключевые тенденции науки в современном мире",
+                subtitle: "Материалы LVIII Международной мультидисциплинарной конференции",
+                date: "Август 2025 г.",
+                location: "Мадрид, Испания<br>2025"
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                mainTitle: "当代世界科学的前景与主要趋势",
+                subtitle: "第五十八届国际多学科会议论文集",
+                date: "2025年8月",
+                location: "西班牙马德里<br>2025"
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            // Update active button state
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach((element, index) => {
+                // Fade out effect
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(5px)';
+                element.style.transition = 'all 0.2s ease';
+                
+                setTimeout(() => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        // Handle HTML content (for line breaks)
+                        if (key === 'location') {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            // For buttons, preserve the SVG icon
+                            if (element.classList.contains('nav-btn')) {
+                                const svg = element.querySelector('svg');
+                                const span = element.querySelector('span');
+                                if (span) span.textContent = translations[lang][key];
+                            } else {
+                                element.textContent = translations[lang][key];
+                            }
+                        }
+                    }
+                    // Fade in
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + (index * 50));
+            });
+
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize with saved preference or default
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'index.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'contents.html';
+            }
+        });
+    </script>
+</body>
+</html>
