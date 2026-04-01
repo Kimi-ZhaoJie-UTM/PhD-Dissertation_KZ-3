@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contents - Internauka Conference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation Bar - Consistent with Page 2 */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            width: 100%;
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 50px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        /* Table of Contents List */
+        .toc-list {
+            list-style: none;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .toc-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 25px;
+        }
+
+        .toc-section:last-child {
+            border-bottom: none;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #222;
+        }
+
+        .section-title {
+            color: #c2185b;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-page {
+            color: #666;
+            font-weight: 600;
+            font-size: 16px;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Article Entries */
+        .article-list {
+            list-style: none;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .article-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .article-title {
+            flex: 1;
+            padding-right: 20px;
+            font-weight: 500;
+        }
+
+        .article-page {
+            color: #888;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+            font-size: 15px;
+        }
+
+        /* Authors styling */
+        .article-authors {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .content-container {
+                padding: 40px 25px;
+            }
+
+            .page-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .article-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .article-page {
+                text-align: left;
+                color: #c2185b;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+            .content-container {
+                page-break-after: always;
+            }
+        }
+
+        /* Hover effects for interactive elements */
+        .toc-section {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            padding: 15px;
+            margin-left: -15px;
+            margin-right: -15px;
+            border-radius: 8px;
+        }
+
+        .toc-section:hover {
+            background-color: rgba(194, 24, 89, 0.03);
+            transform: translateX(5px);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="proceedings.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="section1.html" class="nav-btn next" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <h1 class="page-title" data-i18n="pageTitle">Contents</h1>
+
+        <ul class="toc-list">
+            <!-- Section 1 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section1">Section 1. Biological sciences</span>
+                    <span class="section-page">5</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article1">
+                            Functional specialization of hybridoma clones producing antibodies for differentiated detection of basal and stress-induced expression of HSP70
+                            <span class="article-authors">Sokolenko Alexandra Vladimirovna, Mikhailova Elena Radislavovna</span>
+                        </div>
+                        <span class="article-page">5</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 2 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section2">Section 2. Geography</span>
+                    <span class="section-page">13</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article2">
+                            Krasnodar clinics as part of the infrastructure for the development of medical tourism
+                            <span class="article-authors">Mamiy Dayana Aslanovna, Maksimov Dmitry Vasilievich, Anisimova Viktoriya Viktorovna</span>
+                        </div>
+                        <span class="article-page">13</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 3 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section3">Section 3. Education and pedagogy</span>
+                    <span class="section-page">18</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article3">
+                            Semantic reading strategies. Techniques of working with text on the formation of reading literacy in Russian language and literature lessons
+                            <span class="article-authors">Ergasheva Aigul Bakhtovna</span>
+                        </div>
+                        <span class="article-page">18</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 4 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section4">Section 4. Psychological science</span>
+                    <span class="section-page">22</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article4">
+                            The psychophysiological mechanisms of the impact of mindfulness practices on cognitive and regulatory mental processes, as well as the influence of individual personality traits on their effectiveness
+                            <span class="article-authors">Dilam Angela Aleksandrovna</span>
+                        </div>
+                        <span class="article-page">22</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 5 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section5">Section 5. Agricultural sciences</span>
+                    <span class="section-page">26</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article5">
+                            Granulation and briquetting of feeds
+                            <span class="article-authors">Istomin Maxim Anatolyevich</span>
+                        </div>
+                        <span class="article-page">26</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 6 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section6">Section 6. Engineering</span>
+                    <span class="section-page">33</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article6a">
+                            Scientific approaches to the development and optimization of technological drying regimes for cotton
+                            <span class="article-authors">Khamzaev Dilshod Inomdjonovich</span>
+                        </div>
+                        <span class="article-page">33</span>
+                    </li>
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article6b">
+                            The evolution of car wipers from the first prototypes to modern designs
+                            <span class="article-authors">Vereshchagina Ella Leonidovna, Smirnov Kirill Sergeevich</span>
+                        </div>
+                        <span class="article-page">38</span>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Section 7 -->
+            <li class="toc-section">
+                <div class="section-header">
+                    <span class="section-title" data-i18n="section7">Section 7. Economics</span>
+                    <span class="section-page">57</span>
+                </div>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article7a">
+                            Interregional disparities and threats to economic security: an institutional analysis
+                            <span class="article-authors">Timofeeva Elena Alexandrovna</span>
+                        </div>
+                        <span class="article-page">57</span>
+                    </li>
+                    <li class="article-item">
+                        <div class="article-title" data-i18n="article7b">
+                            Financial innovation and sustainable economic growth in Kazakhstan: opportunities and challenges
+                            <span class="article-authors">Zhao Jie</span>
+                        </div>
+                        <span class="article-page">62</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </main>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                pageTitle: "Contents",
+                section1: "Section 1. Biological sciences",
+                article1: "Functional specialization of hybridoma clones producing antibodies for differentiated detection of basal and stress-induced expression of HSP70<br><span class='article-authors'>Sokolenko Alexandra Vladimirovna, Mikhailova Elena Radislavovna</span>",
+                section2: "Section 2. Geography",
+                article2: "Krasnodar clinics as part of the infrastructure for the development of medical tourism<br><span class='article-authors'>Mamiy Dayana Aslanovna, Maksimov Dmitry Vasilievich, Anisimova Viktoriya Viktorovna</span>",
+                section3: "Section 3. Education and pedagogy",
+                article3: "Semantic reading strategies. Techniques of working with text on the formation of reading literacy in Russian language and literature lessons<br><span class='article-authors'>Ergasheva Aigul Bakhtovna</span>",
+                section4: "Section 4. Psychological science",
+                article4: "The psychophysiological mechanisms of the impact of mindfulness practices on cognitive and regulatory mental processes, as well as the influence of individual personality traits on their effectiveness<br><span class='article-authors'>Dilam Angela Aleksandrovna</span>",
+                section5: "Section 5. Agricultural sciences",
+                article5: "Granulation and briquetting of feeds<br><span class='article-authors'>Istomin Maxim Anatolyevich</span>",
+                section6: "Section 6. Engineering",
+                article6a: "Scientific approaches to the development and optimization of technological drying regimes for cotton<br><span class='article-authors'>Khamzaev Dilshod Inomdjonovich</span>",
+                article6b: "The evolution of car wipers from the first prototypes to modern designs<br><span class='article-authors'>Vereshchagina Ella Leonidovna, Smirnov Kirill Sergeevich</span>",
+                section7: "Section 7. Economics",
+                article7a: "Interregional disparities and threats to economic security: an institutional analysis<br><span class='article-authors'>Timofeeva Elena Alexandrovna</span>",
+                article7b: "Financial innovation and sustainable economic growth in Kazakhstan: opportunities and challenges<br><span class='article-authors'>Zhao Jie</span>"
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                pageTitle: "Оглавление",
+                section1: "Раздел 1. Биологические науки",
+                article1: "Функциональная специализация гибридомных клонов, продуцирующих антитела для дифференцированного обнаружения базальной и стресс-индуцированной экспрессии HSP70<br><span class='article-authors'>Соколенко Александра Владимировна, Михайлова Елена Радиславовна</span>",
+                section2: "Раздел 2. География",
+                article2: "Клиники Краснодара как часть инфраструктуры развития медицинского туризма<br><span class='article-authors'>Мамий Даяна Аслановна, Максимов Дмитрий Васильевич, Анисимова Виктория Викторовна</span>",
+                section3: "Раздел 3. Образование и педагогика",
+                article3: "Стратегии смыслового чтения. Приемы работы с текстом по формированию читательской грамотности на уроках русского языка и литературы<br><span class='article-authors'>Эргашева Айгуль Бахтовна</span>",
+                section4: "Раздел 4. Психологическая наука",
+                article4: "Психофизиологические механизмы воздействия практик осознанности на когнитивные и регуляторные психические процессы, а также влияние индивидуальных черт личности на их эффективность<br><span class='article-authors'>Дилам Анжела Александровна</span>",
+                section5: "Раздел 5. Сельскохозяйственные науки",
+                article5: "Гранулирование и брикетирование кормов<br><span class='article-authors'>Истомин Максим Анатольевич</span>",
+                section6: "Раздел 6. Инженерное дело",
+                article6a: "Научные подходы к разработке и оптимизации технологических режимов сушки хлопка<br><span class='article-authors'>Хамзаев Дильшод Иномджонович</span>",
+                article6b: "Эволюция автомобильного стеклоочистителя от первых образцов до современных разработок<br><span class='article-authors'>Верещагина Элла Леонидовна, Смирнов Кирилл Сергеевич</span>",
+                section7: "Раздел 7. Экономика",
+                article7a: "Межрегиональные диспропорции и угрозы экономической безопасности: институциональный анализ<br><span class='article-authors'>Тимофеева Елена Александровна</span>",
+                article7b: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы<br><span class='article-authors'>Чжао Цзе</span>"
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                pageTitle: "目录",
+                section1: "第1节 生物科学",
+                article1: "杂交瘤克隆功能性特化：产生用于区分检测HSP70基础和应激诱导表达的抗体<br><span class='article-authors'>索科连科·亚历山德拉·弗拉基米罗芙娜，米哈伊洛娃·叶莲娜·拉季斯拉沃芙娜</span>",
+                section2: "第2节 地理学",
+                article2: "克拉斯诺达尔诊所作为医疗旅游发展基础设施的组成部分<br><span class='article-authors'>马米·达亚娜·阿斯兰诺夫娜，马克西莫夫·德米特里·瓦西里耶维奇，阿尼西莫娃·维多利亚·维克托罗芙娜</span>",
+                section3: "第3节 教育与教育学",
+                article3: "语义阅读策略：在俄语和文学课上通过文本工作培养阅读素养的技巧<br><span class='article-authors'>叶尔加舍娃·艾古尔·巴赫托芙娜</span>",
+                section4: "第4节 心理科学",
+                article4: "正念实践对认知和调节性心理过程影响的心理生理机制，以及个体人格特质对其有效性的影响<br><span class='article-authors'>迪拉姆·安吉拉·亚历山德罗芙娜</span>",
+                section5: "第5节 农业科学",
+                article5: "饲料的造粒与压块<br><span class='article-authors'>伊斯托明·马克西姆·阿纳托利耶维奇</span>",
+                section6: "第6节 工程学",
+                article6a: "棉花干燥技术制度开发与优化的科学方法<br><span class='article-authors'>哈姆扎耶夫·迪尔肖德·伊诺姆乔诺维奇</span>",
+                article6b: "汽车雨刷从最初原型到现代设计的演变<br><span class='article-authors'>韦列夏金娜·艾拉·列昂尼多夫娜，斯米尔诺夫·基里尔·谢尔盖耶维奇</span>",
+                section7: "第7节 经济学",
+                article7a: "区域间差异与经济安全威胁：制度分析<br><span class='article-authors'>季莫费耶娃·叶莲娜·亚历山德罗芙娜</span>",
+                article7b: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战<br><span class='article-authors'>赵洁</span>"
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(5px)';
+                element.style.transition = 'all 0.2s ease';
+                
+                setTimeout(() => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (key === 'pageTitle') {
+                            element.textContent = translations[lang][key];
+                        } else if (key.includes('article') || key.includes('section')) {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            const span = element.querySelector('span');
+                            if (span) span.textContent = translations[lang][key];
+                        }
+                    }
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + (index * 30));
+            });
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'proceedings.html';
+            } else if (e.key === 'ArrowRight') {
+                window.location.href = 'section1.html';
+            }
+        });
+    </script>
+</body>
+</html>
