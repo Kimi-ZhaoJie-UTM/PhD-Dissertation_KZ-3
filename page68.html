@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Innovation in Kazakhstan - Internauka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation - Consistent Design */
+        .top-nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(194, 24, 89, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(194, 24, 89, 0.2);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn.prev:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: #c2185b;
+            color: #c2185b;
+        }
+
+        .lang-btn.active {
+            background: #c2185b;
+            color: white;
+            border-color: #c2185b;
+        }
+
+        /* Article Container */
+        .article-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px 100px;
+            width: 100%;
+        }
+
+        /* Article Header */
+        .article-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #c2185b;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-subtitle {
+            font-size: 20px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .article-author {
+            font-size: 18px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .author-affiliation {
+            font-size: 14px;
+            color: #888;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* Article Body */
+        .article-body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .article-body p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .article-body p:first-of-type {
+            text-indent: 0;
+        }
+
+        /* Section Heading */
+        .section-heading {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #c2185b;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Highlight Box for Key Points */
+        .highlight-box {
+            background: rgba(194, 24, 89, 0.05);
+            border-left: 4px solid #c2185b;
+            padding: 20px 25px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Page Number */
+        .page-number {
+            text-align: center;
+            margin-top: 60px;
+            color: #999;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
+
+            .nav-btn span {
+                display: none;
+            }
+
+            .article-container {
+                padding: 40px 25px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-subtitle {
+                font-size: 18px;
+            }
+
+            .article-body {
+                font-size: 16px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .top-nav {
+                display: none;
+            }
+            .article-container {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="contents.html" class="nav-btn prev" data-i18n="prevBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Previous Page</span>
+        </a>
+
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">English</button>
+            <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">Русский</button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+        </div>
+
+        <a href="#" class="nav-btn next disabled" onclick="alert('End of proceedings')" data-i18n="nextBtn">
+            <span>Next Page</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Article Content -->
+    <article class="article-container">
+        <header class="article-header">
+            <h1 class="article-title" data-i18n="articleTitle">
+                Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges
+            </h1>
+            <div class="article-author" data-i18n="authorName">
+                Zhao Jie
+            </div>
+            <div class="author-affiliation" data-i18n="authorAffiliation">
+                Doctor of Business Administration (DBA),<br>
+                Al-Farabi Kazakh National University,<br>
+                Kazakhstan, Almaty
+            </div>
+        </header>
+
+        <div class="article-body">
+            <p data-i18n="para1">
+                Infrastructure limitations further complicate the adoption of advanced financial technologies across Kazakhstan's diverse geographical and socioeconomic landscape. Uneven digital literacy levels create disparities in the ability of different population segments to benefit from financial innovation, potentially exacerbating existing inequalities. Energy infrastructure constraints, particularly in remote regions, impose physical limitations on the reliability of digital financial services. Addressing these challenges necessitates coordinated investments in both human capital and physical infrastructure to create an enabling environment for inclusive financial innovation. The successful navigation of these complex issues will determine the extent to which financial innovation can fulfill its potential as a driver of sustainable and equitable economic growth in Kazakhstan.
+            </p>
+
+            <h2 class="section-heading" data-i18n="conclusionTitle">Conclusion</h2>
+
+            <p data-i18n="para2">
+                The examination of financial innovation within Kazakhstan's economic landscape reveals a fundamental synergy between technological advancement and sustainable development objectives. The nation's strategic approach to financial modernization demonstrates how innovative mechanisms can simultaneously stimulate economic growth while addressing pressing environmental and social challenges. This dual capacity positions financial innovation as a critical enabler of Kazakhstan's transition toward a more diversified and resilient economic model, particularly evident in the successful integration of digital finance solutions with renewable energy financing initiatives.
+            </p>
+
+            <p data-i18n="para3">
+                The policy implications emerging from this analysis underscore the necessity for institutional frameworks that foster collaborative development between state actors and private sector innovators. Effective governance of financial innovation requires establishing regulatory environments that balance risk management with technological progress, ensuring stability without stifling creativity. Furthermore, the alignment of financial sector reforms with the United Nations Sustainable Development Goals presents a strategic opportunity to harmonize national economic priorities with global sustainability benchmarks. Kazakhstan's experience offers valuable insights for developing economies seeking to leverage financial innovation as a tool for comprehensive modernization, demonstrating how targeted policy interventions can maximize the transformative potential of financial technologies while mitigating associated risks. The successful implementation of these strategies will ultimately determine the nation's capacity to achieve sustainable economic growth in an increasingly complex global financial landscape.
+            </p>
+
+            <div class="highlight-box" data-i18n="highlight">
+                <strong>Keywords:</strong> financial innovation, sustainable economic growth, Kazakhstan, digital finance, green bonds, regulatory frameworks.
+            </div>
+
+            <div class="page-number">68</div>
+        </div>
+    </article>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                prevBtn: "Previous Page",
+                nextBtn: "Next Page",
+                articleTitle: "Financial Innovation and Sustainable Economic Growth in Kazakhstan: Opportunities and Challenges",
+                authorName: "Zhao Jie",
+                authorAffiliation: "Doctor of Business Administration (DBA),<br>Al-Farabi Kazakh National University,<br>Kazakhstan, Almaty",
+                para1: "Infrastructure limitations further complicate the adoption of advanced financial technologies across Kazakhstan's diverse geographical and socioeconomic landscape. Uneven digital literacy levels create disparities in the ability of different population segments to benefit from financial innovation, potentially exacerbating existing inequalities. Energy infrastructure constraints, particularly in remote regions, impose physical limitations on the reliability of digital financial services. Addressing these challenges necessitates coordinated investments in both human capital and physical infrastructure to create an enabling environment for inclusive financial innovation. The successful navigation of these complex issues will determine the extent to which financial innovation can fulfill its potential as a driver of sustainable and equitable economic growth in Kazakhstan.",
+                conclusionTitle: "Conclusion",
+                para2: "The examination of financial innovation within Kazakhstan's economic landscape reveals a fundamental synergy between technological advancement and sustainable development objectives. The nation's strategic approach to financial modernization demonstrates how innovative mechanisms can simultaneously stimulate economic growth while addressing pressing environmental and social challenges. This dual capacity positions financial innovation as a critical enabler of Kazakhstan's transition toward a more diversified and resilient economic model, particularly evident in the successful integration of digital finance solutions with renewable energy financing initiatives.",
+                para3: "The policy implications emerging from this analysis underscore the necessity for institutional frameworks that foster collaborative development between state actors and private sector innovators. Effective governance of financial innovation requires establishing regulatory environments that balance risk management with technological progress, ensuring stability without stifling creativity. Furthermore, the alignment of financial sector reforms with the United Nations Sustainable Development Goals presents a strategic opportunity to harmonize national economic priorities with global sustainability benchmarks. Kazakhstan's experience offers valuable insights for developing economies seeking to leverage financial innovation as a tool for comprehensive modernization, demonstrating how targeted policy interventions can maximize the transformative potential of financial technologies while mitigating associated risks. The successful implementation of these strategies will ultimately determine the nation's capacity to achieve sustainable economic growth in an increasingly complex global financial landscape.",
+                highlight: "<strong>Keywords:</strong> financial innovation, sustainable economic growth, Kazakhstan, digital finance, green bonds, regulatory frameworks."
+            },
+            ru: {
+                prevBtn: "Предыдущая страница",
+                nextBtn: "Следующая страница",
+                articleTitle: "Финансовые инновации и устойчивый экономический рост в Казахстане: возможности и проблемы",
+                authorName: "Чжао Цзе",
+                authorAffiliation: "Доктор делового администрирования (DBA),<br>Казахский национальный университет им. аль-Фараби,<br>Казахстан, г. Алматы",
+                para1: "Инфраструктурные ограничения дополнительно усложняют внедрение передовых финансовых технологий в разнообразном географическом и социально-экономическом ландшафте Казахстана. Неравномерный уровень цифровой грамотности создает диспропорции в способности различных сегментов населения извлекать выгоду из финансовых инноваций, что потенциально усугубляет существующее неравенство. Ограничения энергетической инфраструктуры, особенно в отдаленных регионах, накладывают физические ограничения на надежность цифровых финансовых услуг. Преодоление этих вызовов требует скоординированных инвестиций как в человеческий капитал, так и в физическую инфраструктуру для создания благоприятной среды для инклюзивных финансовых инноваций. Успешное преодоление этих сложных проблем определит степень, в которой финансовые инновации смогут реализовать свой потенциал как драйвера устойчивого и справедливого экономического роста Казахстана.",
+                conclusionTitle: "Заключение",
+                para2: "Анализ финансовых инноваций в экономическом ландшафте Казахстана выявляет фундаментальную синергию между технологическим прогрессом и целями устойчивого развития. Стратегический подход страны к финансовой модернизации демонстрирует, как инновационные механизмы могут одновременно стимулировать экономический рост и решать насущные экологические и социальные задачи. Эта двойственная способность позиционирует финансовые инновации как критически важный фактор перехода Казахстана к более диверсифицированной и устойчивой экономической модели, что особенно наглядно проявляется в успешной интеграции цифровых финансовых решений с инициативами финансирования возобновляемой энергетики.",
+                para3: "Политические импликации, вытекающие из этого анализа, подчеркивают необходимость институциональных рамок, способствующих совместному развитию государственных акторов и частных инноваторов. Эффективное управление финансовыми инновациями требует создания регуляторной среды, сбалансированной между управлением рисками и технологическим прогрессом, обеспечивающей стабильность без подавления креативности. Кроме того, согласование реформ финансового сектора с Целями устойчивого развития Организации Объединенных Наций представляет стратегическую возможность для гармонизации национальных экономических приоритетов с глобальными ориентирами устойчивого развития. Опыт Казахстана предоставляет ценные инсайты для развивающихся экономик, стремящихся использовать финансовые инновации как инструмент комплексной модернизации, демонстрируя, как целенаправленные политические вмешательства могут максимизировать трансформационный потенциал финансовых технологий при снижении связанных с ними рисков. Успешная реализация этих стратегий в конечном итоге определит способность страны достичь устойчивого экономического роста в условиях все более сложного глобального финансового ландшафта.",
+                highlight: "<strong>Ключевые слова:</strong> финансовые инновации, устойчивый экономический рост, Казахстан, цифровые финансы, зеленые облигации, нормативно-правовые рамки."
+            },
+            zh: {
+                prevBtn: "上一页",
+                nextBtn: "下一页",
+                articleTitle: "哈萨克斯坦的金融创新与可持续经济增长：机遇与挑战",
+                authorName: "赵洁",
+                authorAffiliation: "工商管理博士（DBA），<br>哈萨克斯坦阿里-法拉比国立大学，<br>哈萨克斯坦，阿拉木图",
+                para1: "基础设施限制进一步加剧了在哈萨克斯坦多样化地理和社会经济格局中采用先进金融技术的复杂性。数字素养水平不均衡造成了不同人群从金融创新中获益能力的差异，可能加剧现有的不平等现象。能源基础设施限制，特别是在偏远地区，对数字金融服务的可靠性施加了物理限制。应对这些挑战需要协调人力资本和物质基础设施投资，为包容性金融创新创造有利环境。成功应对这些复杂问题将决定金融创新能够在多大程度上发挥其作为可持续和公平经济增长驱动力的潜力。",
+                conclusionTitle: "结论",
+                para2: "对哈萨克斯坦经济格局中金融创新的审视揭示了技术进步与可持续发展目标之间的基本协同作用。该国金融现代化战略方法展示了创新机制如何同时刺激经济增长并应对紧迫的环境和社会挑战。这种双重能力将金融创新定位为哈萨克斯坦向更加多元化和有弹性经济模式转型的关键推动因素，这一点在数字金融解决方案与可再生能源融资举措的成功整合中尤为明显。",
+                para3: "本分析产生的政策影响强调了建立制度框架的必要性，以促进国家行为者与私营部门创新者之间的协作发展。金融创新的有效治理需要建立平衡风险管理与技术进步的监管环境，确保稳定而不扼杀创造力。此外，金融部门改革与联合国可持续发展目标的一致性为协调国家经济优先事项与全球可持续发展基准提供了战略机遇。哈萨克斯坦的经验为寻求利用金融创新作为全面现代化工具的发展中经济体提供了宝贵见解，展示了有针对性的政策干预如何能够在降低相关风险的同时最大化金融技术的变革潜力。这些战略的成功实施最终将决定该国在日益复杂的全球金融格局中实现可持续经济增长的能力。",
+                highlight: "<strong>关键词：</strong>金融创新，可持续经济增长，哈萨克斯坦，数字金融，绿色债券，监管框架。"
+            }
+        };
+
+        // Language switching function
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transition = 'opacity 0.2s ease';
+                
+                setTimeout(() => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (key === 'highlight' || key.includes('Affiliation')) {
+                            element.innerHTML = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                    element.style.opacity = '1';
+                }, 200 + (index * 50));
+            });
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (savedLang !== 'en') {
+                changeLanguage(savedLang);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                window.location.href = 'contents.html';
+            }
+        });
+    </script>
+</body>
+</html>
